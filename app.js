@@ -21,6 +21,8 @@ const faqRoutes=require("./routes/faqRoutes")
 const aboutUsRoutes=require("./routes/aboutUsRoutes")
 const termsConditionRoutes=require("./routes/termsConditionRoutes")
 const privacyPolicyRoutes=require("./routes/privacyPolicyRoutes")
+const taxRoutes = require("./routes/taxManagementRoutes")
+const serviceRoutes = require("./routes/serviceManagementRoutes")
 
 app.use(cors({credentials: true,origin: ['http://localhost:3000','https://www.skipaline.com','https://skipaline.com']}));
 
@@ -66,6 +68,8 @@ app.use('/api/v1/aboutus',aboutUsRoutes);
 app.use('/api/v1/termscondition',termsConditionRoutes);
 app.use('/api/v1/privacypolicy',privacyPolicyRoutes);
 app.use('/api/v1/payment', paymentRoutes);
+app.use('/api/v1/tax', taxRoutes);
+app.use('/api/v1/service', serviceRoutes);
 
 // custom error handling middleware
 app.use(errorHandleMiddleware)

@@ -16,6 +16,8 @@ exports.registeraboutUs=asyncErrorCatch(async(req,res,next)=>{
 
 exports.updateaboutUsStore=asyncErrorCatch(async(req,res,next)=>{
     const aboutUs=await aboutusModel.findOne({isStore:true,isDeleted:false});
+
+   
     if(!aboutUs){
         return next(new ErrorHandler(404,"aboutUs Not Found"))
     }
@@ -27,11 +29,13 @@ exports.updateaboutUsStore=asyncErrorCatch(async(req,res,next)=>{
     if(!updatedaboutUs){
         return next(new ErrorHandler(400,"aboutUs not updated"))
     }else{
-        res.status(200).json({success:true,msg:"aboutUs updated"})
+        res.status(200).json({success:true,msg:"About us updated."})
     }
 })
 exports.updateaboutUsUser=asyncErrorCatch(async(req,res,next)=>{
-    const aboutUs=await aboutusModel.findOne({isStore:false,isDeleted:false});
+    const aboutUs = await aboutusModel.findOne({ isStore: false, isDeleted: false });
+    
+    
     if(!aboutUs){
         return next(new ErrorHandler(404,"aboutUs Not Found"))
     }
@@ -49,6 +53,7 @@ exports.updateaboutUsUser=asyncErrorCatch(async(req,res,next)=>{
 
 exports.getSingleaboutUsStoreDetail=asyncErrorCatch(async(req,res,next)=>{
     const aboutUs=await aboutusModel.findOne({isStore:true,isDeleted:false});
+    console.log('about us data is: ', aboutUs)
     if(!aboutUs){
         return next(new ErrorHandler(400,"aboutUs not found"))
     }

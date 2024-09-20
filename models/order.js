@@ -15,9 +15,9 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      discountedPrice:{
+      discountedPrice: {
         type: Number,
-        default:0
+        default: 0,
       },
       product: {
         type: mongoose.Schema.ObjectId,
@@ -46,19 +46,22 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
       type: String,
-      default: 'pending'
+      default: "pending",
     },
     paidAt: {
       type: Date,
     },
     method: {
       type: String,
-      default: "stripe"
-    }
+      default: "stripe",
+    },
   },
-  isOnlineOrder:{
-    type:Boolean,
-    required:[true,"please specify that order is come from online or offline"]
+  isOnlineOrder: {
+    type: Boolean,
+    required: [
+      true,
+      "please specify that order is come from online or offline",
+    ],
   },
   itemsPrice: {
     type: Number,
@@ -75,14 +78,19 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  tax: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   orderStatus: {
     type: mongoose.Schema.ObjectId,
-    ref:"orderStatusModel",
+    ref: "orderStatusModel",
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 // orderSchema.pre(/^find/, function (next) {
@@ -101,7 +109,6 @@ const orderSchema = new mongoose.Schema({
 //   next();
 // });
 
-
 // orderSchema.pre(/^find/, function (next) {
 //   this.populate({
 //     path: 'orderItems.product',
@@ -109,7 +116,6 @@ const orderSchema = new mongoose.Schema({
 //     match: { isDeleted: false },
 //   });
 
-  
 //   next();
 // });
 
@@ -120,7 +126,6 @@ const orderSchema = new mongoose.Schema({
 //     match: { isDeleted: false },
 //   });
 
-  
 //   next();
 // });
 // orderSchema.pre(/^find/, function (next) {
@@ -130,9 +135,7 @@ const orderSchema = new mongoose.Schema({
 //     match: { isDeleted: false },
 //   });
 
-  
 //   next();
 // });
-const orderModel=mongoose.model("OrderModel", orderSchema);
-module.exports =orderModel
- 
+const orderModel = mongoose.model("OrderModel", orderSchema);
+module.exports = orderModel;

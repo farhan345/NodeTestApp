@@ -28,7 +28,7 @@ exports.updatetermsConditionStore=asyncErrorCatch(async(req,res,next)=>{
     if(!updatedtermsCondition){
         return next(new ErrorHandler(400,"termsCondition not updated"))
     }else{
-        res.status(200).json({success:true,msg:"termsCondition updated"})
+        res.status(200).json({success:true,msg:"Terms and Conditions updated."})
     }
 })
 exports.updatetermsConditionUser=asyncErrorCatch(async(req,res,next)=>{
@@ -44,7 +44,7 @@ exports.updatetermsConditionUser=asyncErrorCatch(async(req,res,next)=>{
     if(!updatedtermsCondition){
         return next(new ErrorHandler(400,"termsCondition not updated"))
     }else{
-        res.status(200).json({success:true,msg:"termsCondition updated"})
+        res.status(200).json({success:true,msg:"Terms and Conditions updated."})
     }
 })
 

@@ -28,7 +28,7 @@ exports.updateprivacyPolicyStore=asyncErrorCatch(async(req,res,next)=>{
     if(!updatedprivacyPolicy){
         return next(new ErrorHandler(400,"privacyPolicy not updated"))
     }else{
-        res.status(200).json({success:true,msg:"privacyPolicy updated"})
+        res.status(200).json({success:true,msg:"Privacy Policy updated."})
     }
 })
 exports.updateprivacyPolicyUser=asyncErrorCatch(async(req,res,next)=>{
@@ -44,7 +44,7 @@ exports.updateprivacyPolicyUser=asyncErrorCatch(async(req,res,next)=>{
     if(!updatedprivacyPolicy){
         return next(new ErrorHandler(400,"privacyPolicy not updated"))
     }else{
-        res.status(200).json({success:true,msg:"privacyPolicy updated"})
+        res.status(200).json({success:true,msg:"Privacy Policy updated."})
     }
 })
 

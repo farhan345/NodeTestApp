@@ -45,19 +45,30 @@ const isAuthenticatedToken=asyncErrorCatch(async(req,res,next)=>{
 const isAuthenticatedStore=asyncErrorCatch(async(req,res,next)=>{
     const token = req.headers['x-access-token'];
   
-    if(!token){
-        return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+    if (!token) {
+        return next(new ErrorHandler(401, "Your session has expired due to inactivity"));
     }
-    const expiry=(JSON.parse(atob(token.split('.')[1]))).exp;
-    if(Math.floor((new Date).getTime()/1000)>=expiry){
-        return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    if (Math.floor((new Date).getTime() / 1000) >= expiry) {
+        return next(new ErrorHandler(401, "Your session has expired due to inactivity"));
     }
-    // token verification
-    const decodedData=await jwt.verify(token,process.env.JWT_SECRET_KEY);
-    const store=await storeModel.findById(decodedData.id);
-    if(!store){
-        return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+
+    // Token verification
+    let decodedData;
+    try {
+        decodedData = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    } catch (error) {
+        return next(new ErrorHandler(401, "Invalid token"));
     }
+
+    const store = await storeModel.findById(decodedData.id);
+    const employee = await employeeModel.findById(decodedData.id);
+
+    if (!store && !employee) {
+        return next(new ErrorHandler(401, "Your session has expired due to inactivity"));
+    }
+
     next();
 })
 // const isAuthenticatedStoreOrUser=(req, res, next)=> {
@@ -159,4 +170,27 @@ const authorizedRoles=(req,res,next)=>{
     }
     next();
 }
+
+
+// backup for store auth
+// const token = req.headers['x-access-token'];
+  
+//     if(!token){
+//         return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+//     }
+//     const expiry=(JSON.parse(atob(token.split('.')[1]))).exp;
+//     if(Math.floor((new Date).getTime()/1000)>=expiry){
+//         return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+//     }
+//     // token verification
+//     const decodedData=await jwt.verify(token,process.env.JWT_SECRET_KEY);
+//     const store=await storeModel.findById(decodedData.id);
+//     if(!store){
+//         return next(new ErrorHandler(401,"Your session has expired due to inactivity"));
+//     }
+//     next();
+// backup for store auth
+
+
+
 module.exports={isAuthenticatedUser,isAuthenticatedToken,authorizedRoles,isAuthenticatedEmployee,isAuthenticatedAdmin,isAuthenticatedStore,authorizedStatus};
