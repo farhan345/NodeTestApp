@@ -1,5 +1,5 @@
 const io = require('socket.io-client');
-const socket = io('https://backened.skipaline.com'); // Replace with your server's URL
+const socket = io(`${process.env.BaseUrl}`); // Replace with your server's URL
 
 socket.on('connect', () => {
   console.log('Connected to server');

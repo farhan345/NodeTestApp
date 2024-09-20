@@ -159,7 +159,7 @@ const userWelcomeEmailTemplate = ({url})=>{
       </tr>
       <tr data-element="blue-logo" data-label="Logo">
         <td align="center" class="center-text">
-          <img style="width:120px;border:0px;display: inline!important;" src="https://backened.skipaline.com/resources/template/images/logo.png" width="120" border="0" editable="true" data-icon data-image-edit data-url data-label="Logo" data-image-width alt="logo"> 
+          <img style="width:120px;border:0px;display: inline!important;" src="${process.env.BaseUrl}/resources/template/images/logo.png" width="120" border="0" editable="true" data-icon data-image-edit data-url data-label="Logo" data-image-width alt="logo"> 
         </td>
       </tr>
       <tr>
@@ -177,7 +177,7 @@ const userWelcomeEmailTemplate = ({url})=>{
       <!-- blue-header -->
       <tr>
         <td align="center" class="img-responsive container-padding">
-          <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;" data-image-edit data-url data-label="Header image" width="640" src="https://backened.skipaline.com/resources/template/images/banner.jpg" border="0" editable="true" alt="picture">
+          <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;" data-image-edit data-url data-label="Header image" width="640" src="${process.env.BaseUrl}/resources/template/images/banner.jpg" border="0" editable="true" alt="picture">
         </td>
       </tr>
       <!-- blue-header -->
@@ -304,7 +304,7 @@ const userWelcomeEmailTemplate = ({url})=>{
         <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;">
           <tr>
             <td align="center" class="img-responsive">
-              <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;border-radius:100%;" data-image-edit data-url data-border-radius-default="0,6,36" data-border-radius-custom="Picture" data-label="Picture" width="160" src="https://backened.skipaline.com/resources/template/images/stripe-icon.jpeg" border="0" editable="true" alt="picture">
+              <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;border-radius:100%;" data-image-edit data-url data-border-radius-default="0,6,36" data-border-radius-custom="Picture" data-label="Picture" width="160" src="${process.env.BaseUrl}/resources/template/images/stripe-icon.jpeg" border="0" editable="true" alt="picture">
             </td>
           </tr>
         </table>
@@ -398,7 +398,7 @@ const userWelcomeEmailTemplate = ({url})=>{
         <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;">
           <tr>
             <td align="center" class="img-responsive">
-              <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;border-radius:100%;" data-image-edit data-url data-border-radius-default="0,6,36" data-border-radius-custom="Picture" data-label="Picture" width="160" src="https://backened.skipaline.com/resources/template/images/stripe-icon.jpeg" border="0" editable="true" alt="picture">
+              <img class="auto-width" style="display:block;width:100%;max-width:100%;border:0px;border-radius:100%;" data-image-edit data-url data-border-radius-default="0,6,36" data-border-radius-custom="Picture" data-label="Picture" width="160" src="${process.env.BaseUrl}/resources/template/images/stripe-icon.jpeg" border="0" editable="true" alt="picture">
             </td>
           </tr>
         </table>
@@ -490,11 +490,11 @@ const userWelcomeEmailTemplate = ({url})=>{
                 <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
                   <tr data-element="blue-footer-icon" data-label="Buttons">
                     <td align="center">
-                      <img style="display:block;width:100%;max-width:117px;border:0px;" data-image-edit data-url data-label="App Store" width="117" src="https://backened.skipaline.com/resources/template/images/App-Store.png" border="0" editable="true" alt="icon">
+                      <img style="display:block;width:100%;max-width:117px;border:0px;" data-image-edit data-url data-label="App Store" width="117" src="${process.env.BaseUrl}/resources/template/images/App-Store.png" border="0" editable="true" alt="icon">
                     </td>
                     <td width="20" style="width: 20px;"></td>
                     <td align="center">
-                      <img style="display:block;width:100%;max-width:117px;border:0px;" data-image-edit data-url data-label="Google play" width="117" src="https://backened.skipaline.com/resources/template/images/Google-play.png" border="0" editable="true" alt="icon"></td>
+                      <img style="display:block;width:100%;max-width:117px;border:0px;" data-image-edit data-url data-label="Google play" width="117" src="${process.env.BaseUrl}/resources/template/images/Google-play.png" border="0" editable="true" alt="icon"></td>
                   </tr>
                 </table>
                 <!-- column -->
@@ -523,7 +523,7 @@ const userWelcomeEmailTemplate = ({url})=>{
                         <tr>
                           <td width="10"></td>
                           <td align="center">
-                            <img style="width:36px;border:0px;display: inline!important;" src="https://backened.skipaline.com/resources/template/images/Facebook.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Facebook" data-image-width alt="icon">
+                            <img style="width:36px;border:0px;display: inline!important;" src="${process.env.BaseUrl}/resources/template/images/Facebook.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Facebook" data-image-width alt="icon">
                           </td>
                           <td width="10"></td>
                         </tr>
@@ -534,7 +534,7 @@ const userWelcomeEmailTemplate = ({url})=>{
                         <tr>
                           <td width="10"></td>
                           <td align="center">
-                            <img style="width:36px;border:0px;display: inline!important;" src="https://backened.skipaline.com/resources/template/images/Instagram.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Instagram" data-image-width alt="icon">
+                            <img style="width:36px;border:0px;display: inline!important;" src="${process.env.BaseUrl}/resources/template/images/Instagram.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Instagram" data-image-width alt="icon">
                           </td>
                           <td width="10"></td>
                         </tr>
@@ -545,7 +545,7 @@ const userWelcomeEmailTemplate = ({url})=>{
                         <tr>
                           <td width="10"></td>
                           <td align="center">
-                            <img style="width:36px;border:0px;display: inline!important;" src="https://backened.skipaline.com/resources/template/images/Twitter.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Twitter" data-image-width alt="icon">
+                            <img style="width:36px;border:0px;display: inline!important;" src="${process.env.BaseUrl}/resources/template/images/Twitter.png" width="36" border="0" editable="true" data-icon data-image-edit data-url data-label="Twitter" data-image-width alt="icon">
                           </td>
                           <td width="10"></td>
                         </tr>

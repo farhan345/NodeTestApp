@@ -146,7 +146,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                     })
                     .populate("user");
                   const products = orderList?.orderItems?.map((orderItem) => ({
-                    image: `https://backened.skipaline.com/${orderItem.product.image}`,
+                    image: `${process.env.BaseUrl}/${orderItem.product.image}`,
                     productName: orderItem.product.productName,
                     quantity: orderItem.quantity,
                     price: orderItem.product.discountedPrice,
@@ -248,7 +248,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                       .populate("user");
                     const products = orderList?.orderItems?.map(
                       (orderItem) => ({
-                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
+                        image: `${process.env.BaseUrl}/${orderItem.product.image}`,
                         productName: orderItem.product.productName,
                         quantity: orderItem.quantity,
                         price: orderItem.product.price,
@@ -344,7 +344,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                       .populate("user");
                     const products = orderList?.orderItems?.map(
                       (orderItem) => ({
-                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
+                        image: `${process.env.BaseUrl}/${orderItem.product.image}`,
                         productName: orderItem.product.productName,
                         quantity: orderItem.quantity,
                         price: orderItem.product.price,
@@ -880,7 +880,7 @@ exports.updateUserOrderStatus = asyncErrorCatch(async (req, res, next) => {
     })
     .populate("user");
   const products = orderList?.orderItems?.map((orderItem) => ({
-    image: `https://backened.skipaline.com/${orderItem.product.image}`,
+    image: `${process.env.BaseUrl}/${orderItem.product.image}`,
     productName: orderItem.product.productName,
     quantity: orderItem.quantity,
     price: orderItem.product.price,
