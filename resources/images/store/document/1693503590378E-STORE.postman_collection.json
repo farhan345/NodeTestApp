@@ -1,0 +1,5249 @@
+{
+	"info": {
+		"_postman_id": "97b5e330-5687-4aad-b527-5d1fc5da1408",
+		"name": "E-STORE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16018879"
+	},
+	"item": [
+		{
+			"name": "User Routes",
+			"item": [
+				{
+					"name": "Forgot Password",
+					"item": [
+						{
+							"name": "Forgot Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"m.dawood0022@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/password/forgot",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"password",
+										"forgot"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Forgot Password OTP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"OTP\":\"9787\",\r\n    \"_id\":\"63d76a576fbb4683307c0335\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/password/verify/otp",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"password",
+										"verify",
+										"otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"m.dawood0022@gmail.com\",\r\n    \"password\":\"dawood123\",\r\n    \"confirmPassword\":\"dawood123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/password/reset",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"password",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "User Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Dawood",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "03407665649",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "G 9",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "m.dawood0022@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/WhatsApp Image 2023-06-19 at 12.57.41 PM.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/register",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register User Document",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4NDE0NDU0NSwiZXhwIjoxNjg0MTYyNTQ1fQ.nLpJQOZdLy2OQyRl99b5P9_ani76kViDogCHB71QBrk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/2222 Saqib Javed Assignment 2.pdf"
+										},
+										{
+											"key": "_id",
+											"value": "644bb954c4bd2203f7484356",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/user/register/document",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"register",
+										"document"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "User Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"m.dawood0022@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/login",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Verification",
+					"item": [
+						{
+							"name": "Verify User Email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"OTP\":\"626674\",\r\n    \"_id\":\"649140485ddce58752181182\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/verify/email",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"verify",
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify User By Sending Token",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MDc3MTY1NSwiZXhwIjoxNjgwNzg5NjU1fQ.9ufZzMhaLRcA7J4FLpXifZAgyPbuDCu-mXXl_EdPKeI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/verify",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Order",
+					"item": [
+						{
+							"name": "New Order",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzUzYzRiZDIyMDNmNzQ4NDJlMCIsImlhdCI6MTY4MzAwNzc5OCwiZXhwIjoxNjgzMDI1Nzk4fQ.Glrm0uvzQLbGjtsFeFTG9Tpj8TKeirgNrUsAxdEjaag",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"orderItems\":[\r\n        {\r\n            \"productName\":\"Coffe\",\r\n            \"price\":\"454\",\r\n            \"quantity\":\"90\",\r\n            \"discountedPrice\":0,\r\n            \"product\":\"644f83ad71ad6c400c1ffe6b\"\r\n        }\r\n    ],\r\n    \"paymentInfo\":{\r\n        \"transactionId\":\"12345678\",\r\n        \"status\":\"completed\"\r\n    },\r\n    \"user\":\"644bb753c4bd2203f74842e0\",\r\n    \"store\":\"644bb733c4bd2203f74842db\",\r\n    \"shippingPrice\":25,\r\n    \"itemsPrice\":908,\r\n    \"totalPrice\":933,\r\n    \"isOnlineOrder\":false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/new",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check Stock Available",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzUzYzRiZDIyMDNmNzQ4NDJlMCIsImlhdCI6MTY4MzAxMTY5NCwiZXhwIjoxNjgzMDI5Njk0fQ.I1mZ6zh1020Ohgb50Uz7gz0ZLdGJKyT22WJ70Kz-j5Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cartProducts\":[\r\n    {\r\n        \"product\": \"644bc1e2c4bd2203f74844c9\",\r\n        \"stock\":1\r\n    },\r\n    {\r\n        \"product\": \"644f83ad71ad6c400c1ffe6b\",\r\n        \"stock\":100\r\n    }\r\n]\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/check/available/stock",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"check",
+										"available",
+										"stock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Bookings Of Specific Customer By Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2Y3OGNjYzcxMjM5NzQ1ODQ1ZjhmMyIsImlhdCI6MTY4MzA4MzQ1MCwiZXhwIjoxNjgzMDkwNjUwfQ.Bj7oKsYIvvFkauTMz87iJJOYAWZ0-3oYG0mCNP6Xsqk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/customer/admin/users/bookings/644f635d520b7493277801f5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"customer",
+										"admin",
+										"users",
+										"bookings",
+										"644f635d520b7493277801f5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "Update User Own Profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDFkNWJkZTNhOWQ3MzYzOGZiODYxZCIsImlhdCI6MTY3OTQ5MTk2NSwiZXhwIjoxNjc5NTA5OTY1fQ.ISc794DOQRXtvtUKq7AMKWrX3oCEl4c8OVb2q48UzVo",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Talha Ali",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "_id",
+											"value": "6401d5bde3a9d73638fb861d",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user//me/update",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"",
+										"me",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Own Password",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGEwMGRiYTY2NWRkZTFlNmVlNjBlYiIsImlhdCI6MTY3NTIzNDAwNywiZXhwIjoxNjc1MjQxMjA3fQ.oPYJDK6T8LaDhcoV0geZy2nu0lEOgC-eoCSGg0Z4q2I",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63da00dba665dde1e6ee60eb\",\r\n    \"oldPassword\":\"talha12345\",\r\n    \"newPassword\":\"talha123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/me/update/password",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "View",
+					"item": [
+						{
+							"name": "Get User Own Detail",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjQ5ODFmMzBkNGYwZmNjNzI4YjMxNCIsImlhdCI6MTY3Njk3NDM2MSwiZXhwIjoxNjc2OTkyMzYxfQ.ncDxktCtwkOId3sj3hl-qsIN0X_FT1mC9j3adQrsYNk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63f4981f30d4f0fcc728b314\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/me",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All User Own Orders",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4MzgyNDA2OSwiZXhwIjoxNjgzODQyMDY5fQ.iCvmqvZfrQpF_tHj9tTp1G9XvAF1oc3cEEeqEHCssS4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"644bb954c4bd2203f7484356\",\r\n    \"orderType\":\"InStore\",\r\n    \"orderStatusId\":\"641d64f1d225a66ae3f9a845\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/order/user/own",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"user",
+										"own"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Favourite Stores",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MjU4NzIxNSwiZXhwIjoxNjgyNjA1MjE1fQ.41JeJwSHs3J3JaMzdRkFFlJd_cPhEwgmlrX3hj7B6rA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"userLatitude\":\"33.613846\",\r\n     \"userLongitude\":\"73.062496\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/user/favourite/all",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"favourite",
+										"all"
+									],
+									"query": [
+										{
+											"key": "x-access-token",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Stores",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzUzYzRiZDIyMDNmNzQ4NDJlMCIsImlhdCI6MTY4MjY4NjI0MywiZXhwIjoxNjgyNzA0MjQzfQ.kXbADIEbQ-GplpN8DTs8jAUbl2f05zhr6RbCZjDr7W4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userLatitude\":\"33.613846\",\r\n     \"userLongitude\":\"73.062496\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/all",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Store Reviews",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDFkNWJkZTNhOWQ3MzYzOGZiODYxZCIsImlhdCI6MTY3OTM4NTQ5OSwiZXhwIjoxNjc5NDAzNDk5fQ.9rSdIkaTnhvxxKnL7pV19OnLELUDhdW498JwjgAmb7A",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"6411c22a63dad6794d8bb8ef\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/store/reviews",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Order Detail And Qr Code By User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MjY3NzExMSwiZXhwIjoxNjgyNjk1MTExfQ.lrWjRDWsOKu0KK1vDfJPQDas2eMmk0vjQwwQup_dWuk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"_id\":\"644a6a5b9895632574699aec\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/user/own/single/detail",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"user",
+										"own",
+										"single",
+										"detail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Nearest Stores",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDE4OTYxMzhjMTg4OTNjYjE0OThkMCIsImlhdCI6MTY3ODg4NDI0MCwiZXhwIjoxNjc4OTAyMjQwfQ.Yo9z9G9nFZ6RHb4LLj64H4oSjgN_VfYqb1AmLown7og",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"latitude\":33.5959894,\r\n    \"longitude\":73.0534980\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/all/nearest",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"all",
+										"nearest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Store Detail",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDFkNWJkZTNhOWQ3MzYzOGZiODYxZCIsImlhdCI6MTY3ODk2MjM5NiwiZXhwIjoxNjc4OTgwMzk2fQ.r07tXJVGHzZOFBjBChhVe_QR65xePews_p0-16R7bjI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"6411c22a63dad6794d8bb8ef\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/single",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"single"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Product Detail By Barcode Copy",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDFkNWJkZTNhOWQ3MzYzOGZiODYxZCIsImlhdCI6MTY3OTA0NDAwOCwiZXhwIjoxNjc5MDYyMDA4fQ.nA9SSwUsCqLxyKt9rfjnUlO4nIS6Mywbq5NjILSxHv4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productBarcode\":\"df33535353j\",\r\n    \"store\":\"6411c22a63dad6794d8bb8ef\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/single/barcode/user",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"single",
+										"barcode",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Stores That Have Offer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4MzExODEyNywiZXhwIjoxNjgzMTM2MTI3fQ.hGCWFFW2zzgNCcaOVevgDWFh_0yfG13LRkS4a5yhBpk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userLatitude\":\"33.613846\",\r\n     \"userLongitude\":\"73.062496\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/stores/all",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"stores",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products That Have Offer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4NTM1OTYwOCwiZXhwIjoxNjg1Mzc3NjA4fQ.pL5Qbfi9ZMj_oVcwjbh4wg1GAqMRzCb_JWyouhNC2kY",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"644bb733c4bd2203f74842db\",\r\n    \"searchQuery\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/offer/user/product/all?categoryId=64523c686188baefd3a4604f",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"user",
+										"product",
+										"all"
+									],
+									"query": [
+										{
+											"key": "categoryId",
+											"value": "64523c686188baefd3a4604f"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products That User Add In Cart For Shopping",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4Mzg3MjI1NiwiZXhwIjoxNjgzODkwMjU2fQ.0XCKdyoc5wJmMg-4g0-ayldmceU6Tqo7FebWqhbJiT0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"644bb954c4bd2203f7484356\",\r\n    \"store\":\"644bb733c4bd2203f74842db\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/cart/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Product Categories",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4NTM1OTYwOCwiZXhwIjoxNjg1Mzc3NjA4fQ.pL5Qbfi9ZMj_oVcwjbh4wg1GAqMRzCb_JWyouhNC2kY",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"644bb733c4bd2203f74842db\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/product/category/types/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"category",
+										"types",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Review",
+					"item": [
+						{
+							"name": "Add Review On Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDc2YTU3NmZiYjQ2ODMzMDdjMDMzNSIsImlhdCI6MTY3NTY2OTY4NSwiZXhwIjoxNjc1Njc2ODg1fQ.DQVqrhMzxBaoQpEj2rzSXi9L1zhq3pztjNje0Nv0Lq0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\":\"63da00dba665dde1e6ee60eb\",\r\n    \"store\":\"63e08e94a313388d5faa2dcb\",\r\n    \"rating\":1,\r\n    \"comment\":\"Very bad experience\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/add/review",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"add",
+										"review"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add To Favourite",
+					"item": [
+						{
+							"name": "Add Store In Favourite",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ4OGUyMTAzOTY5MjlkNmQxMjlkNiIsImlhdCI6MTY3OTkwNDk3NiwiZXhwIjoxNjc5OTIyOTc2fQ._RVLdmkwulI8CJadWXaKPBo5cl8RJWqvzh4IRVM0E4U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"user\":\"641d88e210396929d6d129d6\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/favourite/add",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"favourite",
+										"add"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Product",
+					"item": [
+						{
+							"name": "Get All Searched Products By User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4NTM1OTYwOCwiZXhwIjoxNjg1Mzc3NjA4fQ.pL5Qbfi9ZMj_oVcwjbh4wg1GAqMRzCb_JWyouhNC2kY",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"644bb733c4bd2203f74842db\",\r\n    \"searchQuery\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/search?categoryId=64523c686188baefd3a4604f",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"search"
+									],
+									"query": [
+										{
+											"key": "categoryId",
+											"value": "64523c686188baefd3a4604f"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cart Routes",
+					"item": [
+						{
+							"name": "Add Item In Cart For Checking Availability",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4Mzg3MjI1NiwiZXhwIjoxNjgzODkwMjU2fQ.0XCKdyoc5wJmMg-4g0-ayldmceU6Tqo7FebWqhbJiT0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"orderItems\":[\r\n        {\r\n            \"quantity\":3,\r\n            \"product\":\"64523d396844a1624cdb7b52\"\r\n        }\r\n        \r\n    ],\r\n    \"user\":\"644bb954c4bd2203f7484356\",\r\n    \"store\":\"644bb733c4bd2203f74842db\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/cart/add",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Items From Cart",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/cart/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Increment In Cart Item",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MjU4NzIxNSwiZXhwIjoxNjgyNjA1MjE1fQ.41JeJwSHs3J3JaMzdRkFFlJd_cPhEwgmlrX3hj7B6rA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\": \"641d86d110396929d6d129c7\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"quantity\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/cart/inc",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"inc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Decrement In Cart Items",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MjU4NzIxNSwiZXhwIjoxNjgyNjA1MjE1fQ.41JeJwSHs3J3JaMzdRkFFlJd_cPhEwgmlrX3hj7B6rA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\": \"641d86af10396929d6d129bf\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"quantity\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/cart/dec",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"dec"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove item from cart user side",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjNlNWU4YTE5ZjI5MzRlMjA0YmMwOCIsImlhdCI6MTY4MjU4NzIxNSwiZXhwIjoxNjgyNjA1MjE1fQ.41JeJwSHs3J3JaMzdRkFFlJd_cPhEwgmlrX3hj7B6rA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"644a57b214b7f82903939df0\",\r\n    \"product\":\"641d86af10396929d6d129bf\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"user\":\"6423e5e8a19f2934e204bc08\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/cart/delete/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"delete",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty Cart On Exit Shopping",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiOTU0YzRiZDIyMDNmNzQ4NDM1NiIsImlhdCI6MTY4MzI4MDc3OCwiZXhwIjoxNjgzMjk4Nzc4fQ.QxbbuQ2Dgr3NVbZJAl5_jSplkrIQyfE19up7x8y21fk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/cart/delete/complete/64549ab5fe781aa0bb71eac2",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"delete",
+										"complete",
+										"64549ab5fe781aa0bb71eac2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin Routes",
+			"item": [
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "Admin Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"admin\",\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/admin/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/admin/login",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "View",
+					"item": [
+						{
+							"name": "Users",
+							"item": [
+								{
+									"name": "Get All Users By Admin",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/user/admin/users",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"admin",
+												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Users Who Are Not Verified",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NjI4NjYwNCwiZXhwIjoxNjc2MzA0NjA0fQ.ovwP5mOo3xn9sBNWMuFwUsvvJcrNjIvLA9PZWxDswcI",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/user/admin/users/noverified",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"admin",
+												"users",
+												"noverified"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Stores",
+							"item": [
+								{
+									"name": "Get All Stores By Admin",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/store/admin/stores",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"store",
+												"admin",
+												"stores"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Stores Who Are Not Verified",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NjAwNjUwMSwiZXhwIjoxNjc2MDI0NTAxfQ.47SE_GdbeibhZ4sc0COOjX6SpOnEwYg4yAvAmIQwIZs",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/store/admin/stores/noverified",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"store",
+												"admin",
+												"stores",
+												"noverified"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Single Store Detail By Admin",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NDgzMzIwOSwiZXhwIjoxNjg0ODUxMjA5fQ.yOkrrTkedpJH7Dp-wo2MgNHXj2PEXfvFkFexJRlMlsE",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{TestUrl}}/api/v1/store/admin/store/644bb733c4bd2203f74842db",
+											"host": [
+												"{{TestUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"store",
+												"admin",
+												"store",
+												"644bb733c4bd2203f74842db"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Verification",
+					"item": [
+						{
+							"name": "Verify User Document By Admin",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"isDocumentVerified\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/user/admin/user/63d76a576fbb4683307c0335",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"admin",
+										"user",
+										"63d76a576fbb4683307c0335"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Is Admin Login",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NTg1OTczNSwiZXhwIjoxNjc1ODc3NzM1fQ.wiaV6GfJoYx2yL3A-QEytwzov_KQwjVdDWyb6ixNcZ0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/admin/verify",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update Store Status",
+					"item": [
+						{
+							"name": "Update Store Status By Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY3OTY1MDY0OSwiZXhwIjoxNjc5NjY4NjQ5fQ.5XfCIxCZoE6dI4WgZO56EeTTVvmoDqKa1jzxGoH124M",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"isDocumentVerified\":true,\r\n    \"status\":\"blocked\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/store/admin/store/641d69a8b15081e10b341999",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"admin",
+										"store",
+										"641d69a8b15081e10b341999"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update Admin",
+					"item": [
+						{
+							"name": "Update Admin Own Info",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin1@gmail.com\",\r\n    \"name\":\"admin2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/admin/update/info",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"update",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Admin Password",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"newPassword\":\"admin12345\",\r\n    \"confirmNewPassword\":\"admin12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/admin/update/password",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"item": [
+						{
+							"name": "Logout Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/admin/logout",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"admin",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Total Users",
+					"item": [
+						{
+							"name": "Get Total Number Of Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NTkzNTcwNywiZXhwIjoxNjc1OTUzNzA3fQ.wS7G-Do8XZtc_kMint024fiWcDhZiwJKWF1gQ7H6IUE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/total",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"total"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users Not Verified",
+					"item": [
+						{
+							"name": "Get Users Not Verified",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4MDI2MzcyMSwiZXhwIjoxNjgwMjgxNzIxfQ.QT_26SeQOAVm5j3ekEiBkkTBpcSEAKcmPXHr-E4WMVY",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/total/noverified",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"total",
+										"noverified"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Total Stores",
+					"item": [
+						{
+							"name": "Get Total Number Of Stores",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NTkzNTcwNywiZXhwIjoxNjc1OTUzNzA3fQ.wS7G-Do8XZtc_kMint024fiWcDhZiwJKWF1gQ7H6IUE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/total",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"total"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Stores Not Verified",
+					"item": [
+						{
+							"name": "Get Stores Not Verified",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NTkzNTcwNywiZXhwIjoxNjc1OTUzNzA3fQ.wS7G-Do8XZtc_kMint024fiWcDhZiwJKWF1gQ7H6IUE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/total/noverified",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"total",
+										"noverified"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Blocked User",
+					"item": [
+						{
+							"name": "Get All Blocked Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY3OTY0MDQ4MSwiZXhwIjoxNjc5NjU4NDgxfQ.Zj-rzFsn8L6Y5KHvgt7oKwHOi-PCKIGhnXCh1jynQGs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/total/block",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"total",
+										"block"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Blocked Stores",
+					"item": [
+						{
+							"name": "Get All Blocked Stores",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY3OTY1MTk3MCwiZXhwIjoxNjc5NjY5OTcwfQ.ExfyCCfeB0fsCGKvxFg9uVdjyF75bSBn3q5Pgwdrdsk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/total/block",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"total",
+										"block"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Verified Stores",
+					"item": [
+						{
+							"name": "Get All Verified Stores",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NjI4MzczMiwiZXhwIjoxNjc2MzAxNzMyfQ.mlFpMrhHHBp5lAMwm3ZlnhArB1cZ06U9z1KWS8IXc44",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/admin/stores/verified",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"admin",
+										"stores",
+										"verified"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Total Number of Blocked Stores By Month",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4MDI0MTQ0MCwiZXhwIjoxNjgwMjU5NDQwfQ.L6VwJdd9bq8vveS_Ic-hUKSEGDMcfdyfCMTkKuA1d20",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/total/block/month",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"total",
+										"block",
+										"month"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Total Number Of Verified Stores By Month",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4MDI0MTQ0MCwiZXhwIjoxNjgwMjU5NDQwfQ.L6VwJdd9bq8vveS_Ic-hUKSEGDMcfdyfCMTkKuA1d20",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/store/total/verify/month",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"total",
+										"verify",
+										"month"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Total Users BLocked Verified By Month",
+					"item": [
+						{
+							"name": "Get All Users That Are Block By Month",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4MDI0MTQ0MCwiZXhwIjoxNjgwMjU5NDQwfQ.L6VwJdd9bq8vveS_Ic-hUKSEGDMcfdyfCMTkKuA1d20",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/total/block/month",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"total",
+										"block",
+										"month"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Users That Are Verified By Month",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4MDI0MTQ0MCwiZXhwIjoxNjgwMjU5NDQwfQ.L6VwJdd9bq8vveS_Ic-hUKSEGDMcfdyfCMTkKuA1d20",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/v1/user/total/verify/month",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"total",
+										"verify",
+										"month"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "FAQS",
+					"item": [
+						{
+							"name": "Add Faq",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA4MjI4NywiZXhwIjoxNjg1MTAwMjg3fQ.J0-fl_-6fMAWwYLe2irr2CFgNDp6z9ZEw4X1gzrUtA8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"How do I place an order?\",\r\n    \"description\":\"To place an order, browse the products, select the desired item, choose any necessary options (e.g., size, color), and click on the Add to Cart or Buy Now button. Proceed to the checkout process, provide the required information, and confirm your order.\",\r\n    \"isStoreFaq\":false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/faq/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"faq",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Store Faqs",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/faq/store",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"faq",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All User Faqs",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/faq/user",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"faq",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "About Us",
+					"item": [
+						{
+							"name": "Get Store About Us",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/aboutus/store",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"aboutus",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User About Us",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/aboutus/user",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"aboutus",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add About Us",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\":\"To place an order, browse the products, select the desired item, choose any necessary options (e.g., size, color), and click on the Add to Cart or Buy Now button. Proceed to the checkout process, provide the required information, and confirm your order.\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/aboutus/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"aboutus",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Terms Condition",
+					"item": [
+						{
+							"name": "Get Store Terms Condition",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/termscondition/store",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"termscondition",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Terms Condition",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/termscondition/user",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"termscondition",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Terms Condition",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\":\"To place an order, browse the products, select the desired item, choose any necessary options (e.g., size, color), and click on the Add to Cart or Buy Now button. Proceed to the checkout process, provide the required information, and confirm your order.\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/termscondition/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"termscondition",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Privacy Policy",
+					"item": [
+						{
+							"name": "Get Store Privacy Policy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/privacypolicy/store",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"privacypolicy",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Privacy Policy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/privacypolicy/user",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"privacypolicy",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Privacy Policy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTA5Mzk2NCwiZXhwIjoxNjg1MTExOTY0fQ.AW0nPjWfKqbHlOAsu9ob5nAeDKyayeYHGnB4yvK2Ybs",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwMjg1M2VhMjBiYzY5MDMwYTU1YSIsImlhdCI6MTY4NTAxNTk0NCwiZXhwIjoxNjg1MDMzOTQ0fQ.ri4lPHpUJmyFwKGEjR8ZYDqJB8vtV3BYQGjTblKg5E0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\":\"To place an order, browse the products, select the desired item, choose any necessary options (e.g., size, color), and click on the Add to Cart or Buy Now button. Proceed to the checkout process, provide the required information, and confirm your order.\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/privacypolicy/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"privacypolicy",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "http://localhost:5000/api/v1/store/admin/store/document/63e5e693784f9020e12622c0",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTM3ZWY0MTFjMGQ3MDg3MDBmODUwYiIsImlhdCI6MTY3NjAyNTQ1NCwiZXhwIjoxNjc2MDQzNDU0fQ.FQ4skjwWheRlY_xpfd7McmPwHWMQZAUwIjAgLf5x3_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/store/admin/store/document/63e5e693784f9020e12622c0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"store",
+								"admin",
+								"store",
+								"document",
+								"63e5e693784f9020e12622c0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Store Routes",
+			"item": [
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "Register Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "MCC",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "dawood12345",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "m.dawood0022@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "h 9",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "0345987656",
+											"type": "text"
+										},
+										{
+											"key": "storeProfile",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/WhatsApp Image 2023-06-19 at 12.59.29 PM.jpeg"
+										},
+										{
+											"key": "storeDocument",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/WhatsApp Image 2023-06-19 at 12.57.40 PM.jpeg"
+										},
+										{
+											"key": "storeCategoryType",
+											"value": "640ad2d39c432676e4bb7d0b",
+											"type": "text"
+										},
+										{
+											"key": "latitude",
+											"value": "34.0136624",
+											"type": "text"
+										},
+										{
+											"key": "longitude",
+											"value": "71.7934542",
+											"type": "text"
+										},
+										{
+											"key": "storeCover",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/tatto.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/register",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"item": [
+						{
+							"name": "Forgot Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"hduServices12@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/store/password/forgot",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"password",
+										"forgot"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Reset Password OTP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63e0ab1debfff85b5dfc8f64\",\r\n    \"OTP\":\"822984\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/password/verify/otp",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"password",
+										"verify",
+										"otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Store Password",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"m.dawood0022@gmail.com\",\r\n    \"password\":\"store12345\",\r\n    \"confirmPassword\":\"store12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/password/reset",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"password",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Store Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"theusmanhaider@outlook.com\",\r\n    \"password\":\"12345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/store/login",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Verification",
+					"item": [
+						{
+							"name": "Verify Store Email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63e08e94a313388d5faa2dcb\",\r\n    \"OTP\":\"954256\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/verify/email",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"verify",
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Store By Sending Token",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MTY3NDk3NSwiZXhwIjoxNjgxNjkyOTc1fQ.9yh_92fnY2mlE-_UkY51TEIxXWRLHccuujvkk9aur8c",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/verify",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update Own Profile",
+					"item": [
+						{
+							"name": "Update Store Password",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MTcyNzc0NCwiZXhwIjoxNjgxNzQ1NzQ0fQ.BEvyF73qCxaxSno7fQlkSaVX-p5w-CM1S5hWOGU2T_g",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"oldPassword\":\"store12345\",\r\n    \"newPassword\":\"store123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/store/me/update/password",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"me",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Store Own Profile",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYTdmZDgyNmVmNjE5Yzc0YzRjZiIsImlhdCI6MTY4ODUzOTE5NCwiZXhwIjoxNjg4NTU3MTk0fQ.uVYssKtkXprK83zxsqyImG-FjKWzO-lG6pNEokrsnSg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "storeCategoryType",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "storeProfile",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/No-Image-Placeholder.svg.png"
+										},
+										{
+											"key": "storeDocument",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/chllan.pdf"
+										},
+										{
+											"key": "_id",
+											"value": "64a50a7fd826ef619c74c4cf",
+											"type": "text"
+										},
+										{
+											"key": "storeCover",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "longitude",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "latitude",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/store/me/update",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"store",
+										"me",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "View",
+					"item": [
+						{
+							"name": "Store Profile",
+							"item": [
+								{
+									"name": "Get Store Own Profile",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTA4ZTk0YTMxMzM4OGQ1ZmFhMmRjYiIsImlhdCI6MTY3NTY4MDI5NiwiZXhwIjoxNjc1Njk4Mjk2fQ.c6xAzMXQZ6D53yGTv7ZdbAI1QHGiuV6Q4y0rjtQJ_YE",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"_id\":\"63e08e94a313388d5faa2dcb\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/store/me",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"store",
+												"me"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Employees",
+							"item": [
+								{
+									"name": "Get Single Employee Detail",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDhlMzFkMDA0OWQwNTM2NWExMDc5NSIsImlhdCI6MTY3NTIzOTU0NiwiZXhwIjoxNjc1MjQ2NzQ2fQ.ZE16dEE0z7AZoweS2OaHZ0LDbu5COb_-5hPta0xQxlw",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"store\":\"63d8e31d0049d05365a10795\",\r\n    \"_id\":\"63da373f2e09e0c0ee884e52\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/employee/store/employee",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"employee",
+												"store",
+												"employee"
+											],
+											"query": [
+												{
+													"key": null,
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Products",
+							"item": [
+								{
+									"name": "Get All Products By Category",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MDg3OTc5NiwiZXhwIjoxNjgwODk3Nzk2fQ.r9Z34GgiFwhiqaphwQ4j3qqTO2HGEJDXVGYi9_dzpDM",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"category\":\"6412fa29f9ee9c47c05fef04\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BaseURL}}/api/v1/product/category/all",
+											"host": [
+												"{{BaseURL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"product",
+												"category",
+												"all"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Update Employee",
+					"item": [
+						{
+							"name": "Update Employee Details",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDhlMzFkMDA0OWQwNTM2NWExMDc5NSIsImlhdCI6MTY3NTIzOTU0NiwiZXhwIjoxNjc1MjQ2NzQ2fQ.ZE16dEE0z7AZoweS2OaHZ0LDbu5COb_-5hPta0xQxlw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"63d8e31d0049d05365a10795\",\r\n    \"_id\":\"63da373f2e09e0c0ee884e52\",\r\n    \"name\":\"ali haider\",\r\n    \"password\":\"ali12345\",\r\n    \"email\":\"\",\r\n    \"type\":\"employee\",\r\n    \"status\":\"inactive\",\r\n    \"emailForForgotPassword\":\"m.dawood0022@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/employee/store/employee/update",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"store",
+										"employee",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"item": [
+						{
+							"name": "Delete Product By Barcode",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTA4ZTk0YTMxMzM4OGQ1ZmFhMmRjYiIsImlhdCI6MTY3NTc2NjAxOCwiZXhwIjoxNjc1Nzg0MDE4fQ.mahQALCB4LY71W7l07RTFA6R5AzhbIZ5aAbCntd15kE",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productBarcode\":\"63e09fbb2872ee51689ca65d\",\r\n    \"store\":\"63e08e94a313388d5faa2dcb\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/delete/barcode",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"delete",
+										"barcode"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Total Earnings",
+					"item": [
+						{
+							"name": "Get Total Erarning Of InStore",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY4ODU2MDgwOCwiZXhwIjoxNjg4NTc4ODA4fQ.Bd_0Mmr06C5nZ7fevo-PHxIJWcnedQTQ_hWQl8m42aA",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"64a50c5ad826ef619c74c523\",\r\n     \"startDate\":\"2023-07-01\",\r\n    \"endDate\":\"2023-07-05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/instore/earnings",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"instore",
+										"earnings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Total Earning Of InOffer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY4ODU2MDgwOCwiZXhwIjoxNjg4NTc4ODA4fQ.Bd_0Mmr06C5nZ7fevo-PHxIJWcnedQTQ_hWQl8m42aA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"64a50c5ad826ef619c74c523\",\r\n    \"startDate\":\"2023-07-01\",\r\n    \"endDate\":\"2023-07-05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/inoffer/earnings",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"inoffer",
+										"earnings"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Offers",
+					"item": [
+						{
+							"name": "Create Offer Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MjkzMTk2MywiZXhwIjoxNjgyOTQ5OTYzfQ.CCae9sVcUNQy87az9HMMk-kQ8SGxTQdI5aCZorgc22k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"store\": \"644bb733c4bd2203f74842db\",\r\n    \"offerCategory\": \"Summer Sale\",\r\n    \"discountedPercentage\": 30,\r\n    \"dateTillPromoAvailable\":\"22-06-2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/create",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Products In Specific Offer Category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4NTA5OTg0MCwiZXhwIjoxNjg1MTE3ODQwfQ.pjKVGBqYmZt14IJ7gEmqGve9vhaDlXY6FVcJQo7tpg0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offerProducts\": [\r\n        {\r\n            \"product\": \"647095c0d43044b2853c3710\",\r\n            \"stock\":24\r\n        }\r\n    ],\r\n    \"store\": \"644bb733c4bd2203f74842db\",\r\n    \"offerCategory\": \"Summer Sale\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/addproduct",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"addproduct"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Products From Offer",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offerProducts\": [\r\n        {\r\n            \"product\": \"6440ed5492abed8d732bbf0c\"\r\n        }\r\n    ],\r\n    \"store\": \"6440eb16d6cbd2fb6081dac0\",\r\n    \"offerCategory\": \"Winter Sale\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/remove",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Automatically From Offer If Expire",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/offer/delete/auto",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"delete",
+										"auto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Complete Offer",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\": \"64269e65b325af55948c6ff3\",\r\n    \"offerCategory\": \"Eid Sale\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/type/remove",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"type",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Offer Categories Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2VjYjI1YzBhODRkNjI2OTE2MWYzZiIsImlhdCI6MTY4MjY4MTQyMSwiZXhwIjoxNjgyNjk5NDIxfQ.pIk7hOSAVgS_vm3PfvyUOX_tc5zsyztmRwnFaVatLAs",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"643ecb25c0a84d6269161f3f\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/offer/categories/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"categories",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products OF Specific Offer Category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MzIwNTk5OCwiZXhwIjoxNjgzMjIzOTk4fQ.WkTWZyov_cMIj4NrlNBI-gvObSi86G8gGMHReSlntGY",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"644bb733c4bd2203f74842db\",\r\n    \"offerCategory\":\"Summer Sale\",\r\n    \"searchText\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/offer/category/products",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"category",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products Of Store That Are Not In Offer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MjkzMTk2MywiZXhwIjoxNjgyOTQ5OTYzfQ.CCae9sVcUNQy87az9HMMk-kQ8SGxTQdI5aCZorgc22k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"644bb733c4bd2203f74842db\",\r\n    \"searchQuery\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/not/offer/all",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"not",
+										"offer",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Offer Category Type",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\": \"641d6b26fe7412ac0ec4a389\",\r\n    \"offerCategory\": \"Summer Sale\",\r\n    \"discountedPercentage\": 50,\r\n    \"dateTillPromoAvailable\":\"22-06-2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/offer/update/category",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"offer",
+										"update",
+										"category"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Inventory",
+					"item": [
+						{
+							"name": "Add product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTE0ZThiYjYxNWNjOTBhY2Q5NDcyMSIsImlhdCI6MTY4NzMyNTcyNiwiZXhwIjoxNjg3MzQzNzI2fQ.P2jU5Z7TLCpIm8cSl782IZ7i-1xwRE62L7-VCp8erv8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "productName",
+											"value": "testing",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "230",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "34",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "64914fe5b615cc90acd94748",
+											"type": "text"
+										},
+										{
+											"key": "store",
+											"value": "64914e8bb615cc90acd94721",
+											"type": "text"
+										},
+										{
+											"key": "productImage",
+											"type": "file",
+											"src": "/C:/Users/Dawood/Downloads/toyota fortuner.png"
+										},
+										{
+											"key": "productBarcode",
+											"value": "df33535353jhi5i770",
+											"type": "text"
+										},
+										{
+											"key": "productLocation",
+											"value": "right side",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/add",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add product Using Excel File",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY5MTQ5NzE4NSwiZXhwIjoxNjkxNTE1MTg1fQ.VLFPmFIKBZnmp3wqdJAc1VpV1GE7jSefNg7Pb63WV28",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "productName",
+											"value": "ttee",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "price",
+											"value": "454",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "quantity",
+											"value": "34",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "644bba36c4bd2203f748438f",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "storeId",
+											"value": "6492ac06606ff8d80dd085a9",
+											"type": "text"
+										},
+										{
+											"key": "productImage",
+											"type": "file",
+											"src": "/Users/muhammaddawood/Downloads/File 2.numbers",
+											"disabled": true
+										},
+										{
+											"key": "productBarcode",
+											"value": "df33535353jhi5i779",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "productLocation",
+											"value": "right side",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/muhammaddawood/Downloads/File.numbers"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/upload/excel",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"upload",
+										"excel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY5MTQ5NzE4NSwiZXhwIjoxNjkxNTE1MTg1fQ.VLFPmFIKBZnmp3wqdJAc1VpV1GE7jSefNg7Pb63WV28",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"64a50c5ad826ef619c74c523\",\r\n    \"searchQuery\":\"\",\r\n    \"categoryId\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/all",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Product Detail By Barcode",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MTYyNzE4MCwiZXhwIjoxNjgxNjQ1MTgwfQ.jBJ_tVFkZbv43QwIs64t0NbcAniRqFFWCBwMyoGXLsQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productBarcode\":\"df33535353j90108\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/single/barcode/store",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"single",
+										"barcode",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Product Detail By ID",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTA4ZTk0YTMxMzM4OGQ1ZmFhMmRjYiIsImlhdCI6MTY3NTY2MjM1MSwiZXhwIjoxNjc1NjY5NTUxfQ.Sxp5hHAXlYE2WUPCms0sNBOfubBwW-6TBTSGnWckNG0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63e094f9eed3ad377a306b9c\",\r\n    \"store\":\"63e08e94a313388d5faa2dcb\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/single/id",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"single",
+										"id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product Info",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTA4ZTk0YTMxMzM4OGQ1ZmFhMmRjYiIsImlhdCI6MTY3NTY2MjM1MSwiZXhwIjoxNjc1NjY5NTUxfQ.Sxp5hHAXlYE2WUPCms0sNBOfubBwW-6TBTSGnWckNG0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "productName",
+											"value": "Milk Pack",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "230",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "63d8f65ac31cfc8a836fc7db",
+											"type": "text"
+										},
+										{
+											"key": "productImage",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "store",
+											"value": "63e08e94a313388d5faa2dcb",
+											"type": "text"
+										},
+										{
+											"key": "_id",
+											"value": "63e094f9eed3ad377a306b9c",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/product/update",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By Id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"deletedProducts\": [\r\n        {\r\n            \"product\": \"6440ed3e92abed8d732bbf06\"\r\n        }\r\n    ],\r\n    \"store\": \"6440eb16d6cbd2fb6081dac0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/delete/id",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"delete",
+										"id"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product Category Routes",
+					"item": [
+						{
+							"name": "Add Product Category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTE0ZThiYjYxNWNjOTBhY2Q5NDcyMSIsImlhdCI6MTY4NzI0NDc0OSwiZXhwIjoxNjg3MjYyNzQ5fQ.25QQ6DYpsTn30T7OIog_nLgkFFdfxZZ0bF9YbwBGo_o",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryName\":\"General\",\r\n    \"store\":\"64914e8bb615cc90acd94721\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/category/add",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"category",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Product Categories",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY5MTQ5Nzk5MiwiZXhwIjoxNjkxNTE1OTkyfQ.z9qBj_5WLG0PkgExb-vJq4UjI42onv-vGAQRMMzniEc",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"64a50c5ad826ef619c74c523\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/api/v1/product/category/types",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"category",
+										"types"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product Category",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MjkzMTk2MywiZXhwIjoxNjgyOTQ5OTYzfQ.CCae9sVcUNQy87az9HMMk-kQ8SGxTQdI5aCZorgc22k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"categoryName\":\"Clothings And Fashion\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/category/644bba0dc4bd2203f7484385",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"category",
+										"644bba0dc4bd2203f7484385"
+									],
+									"query": [
+										{
+											"key": "x-access-token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MjkzMTk2MywiZXhwIjoxNjgyOTQ5OTYzfQ.CCae9sVcUNQy87az9HMMk-kQ8SGxTQdI5aCZorgc22k",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product Category",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NGJiNzMzYzRiZDIyMDNmNzQ4NDJkYiIsImlhdCI6MTY4MzEwODU5OSwiZXhwIjoxNjgzMTI2NTk5fQ.6f1fe0SVf7uAETkLgPkYjPYtOhOXgoCdKQYcRjNYSYk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/product/category/644bb9a9c4bd2203f748436b",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"category",
+										"644bb9a9c4bd2203f748436b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "Update User Order Status",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MTgwMjQ4OSwiZXhwIjoxNjgxODIwNDg5fQ.4xVZooQ2N0-8GtsOot7LFuy2yJSNZI359Xeadb7nNz8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"643d2db0a5c22fcf4e25f925\",\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\",\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"orderStatusId\":\"641d64fad225a66ae3f9a848\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/update/status",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"update",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Users Order By Store Owner",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2VjYjI1YzBhODRkNjI2OTE2MWYzZiIsImlhdCI6MTY4MjY2NDA4OSwiZXhwIjoxNjgyNjgyMDg5fQ.f0V8ZipqB6A_gIMrhkvaGprjiqd3ZWUJJN_5K0XBC5k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"643ecb25c0a84d6269161f3f\",\r\n    \"orderType\":\"InOffer\",\r\n    \"orderStatusId\":\"64394488439d40de5a6f1243\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/users/all",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"users",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Order Detail By Store Owner",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2VjYjI1YzBhODRkNjI2OTE2MWYzZiIsImlhdCI6MTY4MjY2NDA4OSwiZXhwIjoxNjgyNjgyMDg5fQ.f0V8ZipqB6A_gIMrhkvaGprjiqd3ZWUJJN_5K0XBC5k",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"643ecb25c0a84d6269161f3f\",\r\n    \"user\":\"6423e5e8a19f2934e204bc08\",\r\n    \"_id\":\"644b64ab4627d788a6945144\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/order/user/single",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"user",
+										"single"
+									],
+									"query": [
+										{
+											"key": "x-access-token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZDhlMzFkMDA0OWQwNTM2NWExMDc5NSIsImlhdCI6MTY3NTQxODk0MywiZXhwIjoxNjc1NDI2MTQzfQ.vsdKMXp6sPZuRSWWpjVuGIbijO8QWkdbL9NlbPgoibk",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Employee",
+					"item": [
+						{
+							"name": "Forgot Password",
+							"item": [
+								{
+									"name": "Forgot Password",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"emailForForgotPassword\":\"m.dawood0022@gmail.com\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/v1/employee/password/forgot",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"v1",
+												"employee",
+												"password",
+												"forgot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Verify Forgot Password OTP",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"_id\":\"643e92c1be693692df3ceb16\",\r\n    \"OTP\":\"899397\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/v1/employee/password/verify/otp",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"v1",
+												"employee",
+												"password",
+												"verify",
+												"otp"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Reset Password",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"store-test-fake-1186@gmail.com\",\r\n    \"password\":\"emp12345\",\r\n    \"confirmPassword\":\"emp12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/v1/employee/password/reset",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"v1",
+												"employee",
+												"password",
+												"reset"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Add Employee",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTUwYzVhZDgyNmVmNjE5Yzc0YzUyMyIsImlhdCI6MTY4ODY0NTYyNCwiZXhwIjoxNjg4NjYzNjI0fQ.7ul_fuMyXyYAX7sdYCt8SATkgk9ag-rKPn1ex0IreKE",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"muhammad dawood\",\r\n    \"type\":\"Manager\",\r\n    \"store\":\"64a50c5ad826ef619c74c523\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{TestUrl}}/api/v1/employee/register",
+									"host": [
+										"{{TestUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Employee Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"store-test-fake-1186@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/employee/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Forgot Password Email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"643e92c1be693692df3ceb16\",\r\n    \"emailForForgotPassword\":\"m.dawood0022@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/employee/add/forgotemail",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"add",
+										"forgotemail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Forgot Password Email OTP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"OTP\":\"226320\",\r\n    \"_id\":\"643e92c1be693692df3ceb16\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/employee/forgotemail/verify",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"forgotemail",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Employee Own Password",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2U5MmMxYmU2OTM2OTJkZjNjZWIxNiIsImlhdCI6MTY4MTgzOTgzOCwiZXhwIjoxNjgxODU3ODM4fQ.u_oMLD-BsipQfZNJSsOOtdswX4np0BSisQNJpG3nPig",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"oldPassword\":\"emp12345\",\r\n    \"newPassword\":\"12345678\",\r\n    \"_id\":\"643e92c1be693692df3ceb16\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/employee/update/password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"update",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Employees",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MjY0MTEyNSwiZXhwIjoxNjgyNjU5MTI1fQ.3egWFZYxvJihvN0RRPD1p514DLWuWJIhS6LTIAvOfN4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"641d6b26fe7412ac0ec4a389\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/employee/store/employees",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"store",
+										"employees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Employee By Store",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{storeToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"store\":\"6440eb16d6cbd2fb6081dac0\",\r\n    \"_id\":\"6440eb16d6cbd2fb6081dac0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseURL}}/api/v1/employee/store/delete",
+									"host": [
+										"{{BaseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"store",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Offer Category Routes",
+			"item": [
+				{
+					"name": "Add Offer Category Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTFjMjJhNjNkYWQ2Nzk0ZDhiYjhlZiIsImlhdCI6MTY3OTYzNzg2MCwiZXhwIjoxNjc5NjU1ODYwfQ.xJ3dGO0CIPV3nAgHapn8QcDucMm2ovEOq4pLszRheLU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"store\":\"6411c22a63dad6794d8bb8ef\",\r\n    \"offerCategoryType\":\"Annual Sale\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/offer/category/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"offer",
+								"category",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Offer Category Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTFjMjJhNjNkYWQ2Nzk0ZDhiYjhlZiIsImlhdCI6MTY3OTYzNzg2MCwiZXhwIjoxNjc5NjU1ODYwfQ.xJ3dGO0CIPV3nAgHapn8QcDucMm2ovEOq4pLszRheLU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"store\":\"6411c22a63dad6794d8bb8ef\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/offer/category/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"offer",
+								"category",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee Routes",
+			"item": [
+				{
+					"name": "View",
+					"item": [
+						{
+							"name": "Get Employee Own Detail",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGEyYTdmNGI4NGQ5ZjhkYWYwNDEwYiIsImlhdCI6MTY3NTI0MzY5NCwiZXhwIjoxNjc1MjUwODk0fQ.T1qKsAszo7vZBfg6ZEqTsJ3sj21j-ySDOu4o1t96ry8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\":\"63da2a7f4b84d9f8daf0410b\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/employee/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"employee",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order Status Routes",
+			"item": [
+				{
+					"name": "Add Order Status Type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderStatusType\":\"Preparing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/order/status/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"status",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Order Status Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/order/status/all",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"status",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Store Category Routes",
+			"item": [
+				{
+					"name": "Add Store Category Type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"storeCategoryType\":\"Grocery\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/store/category/add",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"store",
+								"category",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Store Category Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/store/category/all",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"store",
+								"category",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product Detail By Barcode",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTA4ZTk0YTMxMzM4OGQ1ZmFhMmRjYiIsImlhdCI6MTY3NTY2MjM1MSwiZXhwIjoxNjc1NjY5NTUxfQ.Sxp5hHAXlYE2WUPCms0sNBOfubBwW-6TBTSGnWckNG0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productBarcode\":\"12121def5gr42323\",\r\n    \"store\":\"63e08e94a313388d5faa2dcb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/product/single/barcode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"single",
+								"barcode"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Routes",
+			"item": [
+				{
+					"name": "Get Client Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base2}}v1/config/paypal",
+							"host": [
+								"{{base2}}v1"
+							],
+							"path": [
+								"config",
+								"paypal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FAQS",
+			"item": [
+				{
+					"name": "Add New FAQS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"question\":\"Accordion Header Five\",\r\n    \"answer\":\"Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/api/v1/faqs/add",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"faqs",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Faqs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TestUrl}}/api/v1/faqs/all",
+							"host": [
+								"{{TestUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"faqs",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseURL",
+			"value": "https://backened.skipaline.com"
+		},
+		{
+			"key": "TestUrl",
+			"value": "http://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "store",
+			"value": "641d6b26fe7412ac0ec4a389",
+			"type": "string"
+		},
+		{
+			"key": "storeToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWQ2YjI2ZmU3NDEyYWMwZWM0YTM4OSIsImlhdCI6MTY4MTY0MDY2MCwiZXhwIjoxNjgxNjU4NjYwfQ._qzZZccaldNNH3XU7M_W1bVY45TUhWyF8uzt6WPNjSE",
+			"type": "string"
+		}
+	]
+}
