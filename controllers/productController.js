@@ -1089,7 +1089,6 @@ exports.addProductUsingExcelFile = asyncErrorCatch(async (req, res, next) => {
         "product",
         imageFileName
       );
-      //space
       record.image = fs.existsSync(imagePath) ? imagePath : null;
 
       bulkOps.push({ insertOne: { document: record } });
