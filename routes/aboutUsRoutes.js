@@ -13,5 +13,4 @@ router.post('/update/user',isAuthenticatedAdmin,updateaboutUsUser)
 router.get('/store',isAuthenticatedAdmin,getSingleaboutUsStoreDetail)
 router.get('/user',isAuthenticatedAdmin,getSingleaboutUsUserDetail)
 
-
 module.exports=router;

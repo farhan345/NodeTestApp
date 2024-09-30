@@ -91,6 +91,10 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  expirationTime: {
+    type: Date,
+    default: () => new Date(Date.now() + 30 * 60 * 1000), // 10 minutes from now
+  },
 });
 
 // orderSchema.pre(/^find/, function (next) {
@@ -137,5 +141,30 @@ const orderSchema = new mongoose.Schema({
 
 //   next();
 // });
+orderSchema.methods.isExpired = function () {
+  return Date.now() > this.expirationTime;
+};
+
+orderSchema.statics.removeExpiredOrders = async function () {
+  const expiredOrders = await this.find({
+    expirationTime: { $lt: new Date() },
+    "paymentInfo.status": "pending",
+  });
+
+  for (const order of expiredOrders) {
+    // Restore product quantities
+    for (const item of order.orderItems) {
+      await mongoose
+        .model("productModel")
+        .findByIdAndUpdate(item.product, { $inc: { quantity: item.quantity } });
+    }
+
+    // Remove the expired order
+    await this.findByIdAndDelete(order._id);
+  }
+
+  return expiredOrders.length; // Return the number of removed orders
+};
+
 const orderModel = mongoose.model("OrderModel", orderSchema);
 module.exports = orderModel;

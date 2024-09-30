@@ -1,4 +1,5 @@
 const orderModel = require("../models/order");
+const cron = require("node-cron");
 const asyncErrorCatch = require("../middleware/asyncErrorHandlers");
 const ErrorHandler = require("../utils/errorHandler");
 const productModel = require("../models/product");
@@ -11,6 +12,15 @@ const fs = require("fs");
 const handlebars = require("handlebars");
 const sendEmailWithTemplate = require("../utils/sendEmailWithTemplate");
 const { createCheckoutSession } = require("./paymentController");
+
+cron.schedule("*/1 * * * *", async () => {
+  try {
+    const removedCount = await orderModel.removeExpiredOrders();
+    console.log(`${removedCount} expired orders removed`);
+  } catch (error) {
+    console.error("Error removing expired orders:", error);
+  }
+});
 // Create new Order
 exports.newOrder = asyncErrorCatch(async (req, res, next) => {
   let count = 0;
@@ -130,6 +140,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                   ? "665d924f0c58a92b7e224086"
                   : "665d924f0c58a92b7e224086",
                 store,
+                expirationTime: new Date(Date.now() + 10 * 60 * 1000),
               },
               async (err, result) => {
                 if (err) {
@@ -146,7 +157,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                     })
                     .populate("user");
                   const products = orderList?.orderItems?.map((orderItem) => ({
-                    image: `${process.env.BaseUrl}/${orderItem.product.image}`,
+                    image: `https://backened.skipaline.com/${orderItem.product.image}`,
                     productName: orderItem.product.productName,
                     quantity: orderItem.quantity,
                     price: orderItem.product.discountedPrice,
@@ -231,6 +242,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                     ? "665d924f0c58a92b7e224086"
                     : "665d924f0c58a92b7e224086",
                   store,
+                  expirationTime: new Date(Date.now() + 2 * 60 * 1000),
                 },
                 async (err, result) => {
                   if (err) {
@@ -248,7 +260,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                       .populate("user");
                     const products = orderList?.orderItems?.map(
                       (orderItem) => ({
-                        image: `${process.env.BaseUrl}/${orderItem.product.image}`,
+                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
                         productName: orderItem.product.productName,
                         quantity: orderItem.quantity,
                         price: orderItem.product.price,
@@ -344,7 +356,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                       .populate("user");
                     const products = orderList?.orderItems?.map(
                       (orderItem) => ({
-                        image: `${process.env.BaseUrl}/${orderItem.product.image}`,
+                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
                         productName: orderItem.product.productName,
                         quantity: orderItem.quantity,
                         price: orderItem.product.price,
@@ -369,7 +381,11 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
                       platformFee: result?.platformFee,
                       tax: result?.tax,
                       total: parseFloat(
-                        (result?.itemsPrice + 10.99).toFixed(2)
+                        (
+                          result?.itemsPrice +
+                          result?.platformFee +
+                          result?.tax
+                        ).toFixed(2)
                       ),
                     });
 
@@ -880,7 +896,7 @@ exports.updateUserOrderStatus = asyncErrorCatch(async (req, res, next) => {
     })
     .populate("user");
   const products = orderList?.orderItems?.map((orderItem) => ({
-    image: `${process.env.BaseUrl}/${orderItem.product.image}`,
+    image: `https://backened.skipaline.com/${orderItem.product.image}`,
     productName: orderItem.product.productName,
     quantity: orderItem.quantity,
     price: orderItem.product.price,

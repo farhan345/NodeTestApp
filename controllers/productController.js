@@ -130,94 +130,6 @@ exports.getSingleProductDetailByBarcode = asyncErrorCatch(
   }
 );
 
-// exports.updateproductInfo = asyncErrorCatch(async (req, res, next) => {
-//   debugger;
-//   // Validation checks
-//   if (!req.body.productName) {
-//     return next(new ErrorHandler(400, "Please enter product name"));
-//   }
-//   if (!req.body.price) {
-//     return next(new ErrorHandler(400, "Please enter product price"));
-//   }
-//   if (!req.body.quantity) {
-//     return next(new ErrorHandler(400, "Please enter product quantity"));
-//   }
-//   if (!req.body.category) {
-//     return next(new ErrorHandler(400, "Please select product category"));
-//   }
-//   if (!req.body.productLocation) {
-//     return next(new ErrorHandler(400, "Please select product location"));
-//   }
-//   if (!req.body.store) {
-//     return next(new ErrorHandler(400, "Please enter store Id"));
-//   }
-//   if (!req.body.isTaxable) {
-//     return next(new ErrorHandler(400, "Please enter taxable"));
-//   }
-//   if (!req.body.productBarcode) {
-//     return next(new ErrorHandler(400, "Please add product barcode"));
-//   }
-
-//   // Find the product by _id and store, ensure it's not deleted
-//   const product = await productModel.findOne({
-//     _id: req.body._id,
-//     store: req.body.store,
-//     isDeleted: false,
-//   });
-//   if (!product) {
-//     return next(new ErrorHandler(400, "Product not found"));
-//   }
-
-//   // Data to be updated
-//   const Data = {
-//     productName: req.body.productName,
-//     price: req.body.price,
-//     quantity: req.body.quantity,
-//     productLocation: req.body.productLocation,
-//     category: req.body.category,
-//     isTaxable: req.body.isTaxable,
-//     productBarcode: req.body.productBarcode,
-//     image: req.file ? req.file?.path : product.image, // Only update image if a new file is uploaded
-//   };
-
-//   // Update only non-empty fields
-//   const newData = await isObjectPropertyEmpty(Data, product);
-
-//   productModel.findByIdAndUpdate(
-//     req.body._id,
-//     newData,
-//     { runValidators: true, new: true }, // Return the updated document
-//     async (err, result) => {
-//       if (err) {
-//         // If there's an error, delete the uploaded image (if any)
-//         if (req?.file?.path) {
-//           fs.unlinkSync(req.file.path);
-//         }
-//         return next(new ErrorHandler(400, err.message));
-//       } else {
-//         // If the update is successful and an image was uploaded, remove the old image
-//         if (req?.file?.path && result?.image) {
-//           try {
-//             fs.unlinkSync(result.image); // Ensure that the old image is deleted safely
-//           } catch (error) {
-//             console.error("Error deleting old image:", error.message);
-//           }
-//         }
-
-//         // Fetch the updated product
-//         const updatedProduct = await productModel.findById(req.body._id);
-
-//         // Send success response
-//         res.status(200).json({
-//           success: true,
-//           msg: "Product updated",
-//           product: updatedProduct,
-//         });
-//       }
-//     }
-//   );
-// });
-
 exports.updateproductInfo = asyncErrorCatch(async (req, res, next) => {
   if (!req.body.productName)
     return next(new ErrorHandler(400, "Please enter product name"));
@@ -235,14 +147,17 @@ exports.updateproductInfo = asyncErrorCatch(async (req, res, next) => {
     return next(new ErrorHandler(400, "Please enter taxable"));
   if (!req.body.productBarcode)
     return next(new ErrorHandler(400, "Please add productBarcode"));
+
   const product = await productModel.findOne({
     _id: req.body._id,
     store: req.body.store,
     isDeleted: false,
   });
+
   if (!product) {
     return next(new ErrorHandler(400, "Product not found"));
   }
+
   const updateData = {
     productName: req.body.productName,
     price: req.body.price,
@@ -252,22 +167,26 @@ exports.updateproductInfo = asyncErrorCatch(async (req, res, next) => {
     isTaxable: req.body.isTaxable,
     productBarcode: req.body.productBarcode,
   };
+
   // Only add image to updateData if a new file is uploaded
   if (req.file) {
     updateData.image = req.file.path;
   }
+
   try {
     const updatedProduct = await productModel.findByIdAndUpdate(
       req.body._id,
       updateData,
       { new: true, runValidators: true }
     );
+
     // If a new image was uploaded and there was an old image, delete the old one
     if (req.file && product.image) {
       fs.unlink(product.image, (err) => {
         if (err) console.error("Error deleting old image:", err);
       });
     }
+
     res
       .status(200)
       .json({ success: true, msg: "Product updated", product: updatedProduct });
@@ -906,7 +825,7 @@ exports.checkProductsStockAvailable = asyncErrorCatch(
 //         const filePath = path.join(__dirname, '..', 'resources', 'failedexcelfiles', fileName);
 //         await workbook.xlsx.writeFile(filePath);
 
-//         const url = `${process.env.BaseUrl}/resources/failedexcelfiles/${fileName}`;
+//         const url = `https://backened.skipaline.com/resources/failedexcelfiles/${fileName}`;
 //         res.status(201).json({ success: true, message: 'Uploaded', failedProductUrl: url });
 //     } else {
 //         res.status(201).json({ success: true, message: 'Uploaded', failedProductUrl: '' });
@@ -1044,7 +963,7 @@ exports.checkProductsStockAvailable = asyncErrorCatch(
 //     );
 //     await workbook.xlsx.writeFile(filePath);
 
-//     const url = `${process.env.BaseUrl}/resources/failedexcelfiles/${fileName}`;
+//     const url = `https://backened.skipaline.com/resources/failedexcelfiles/${fileName}`;
 //     res
 //       .status(201)
 //       .json({ success: true, message: "Uploaded", failedProductUrl: url });
@@ -1190,7 +1109,7 @@ exports.addProductUsingExcelFile = asyncErrorCatch(async (req, res, next) => {
     );
     await workbook.xlsx.writeFile(filePath);
 
-    const url = `${process.env.BaseUrl}/resources/failedexcelfiles/${fileName}`;
+    const url = `https://backened.skipaline.com/resources/failedexcelfiles/${fileName}`;
     res
       .status(201)
       .json({ success: true, message: "Uploaded", failedProductUrl: url });

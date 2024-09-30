@@ -4,6 +4,7 @@ const stripe = require("stripe")(
 );
 const storeModel = require("../models/store");
 const orderModel = require("../models/order");
+const path = require("path");
 
 exports.createCheckoutSession = async (order, res, next) => {
   console.log(order);
