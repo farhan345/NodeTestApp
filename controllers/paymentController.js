@@ -6,43 +6,198 @@ const storeModel = require("../models/store");
 const orderModel = require("../models/order");
 const path = require("path");
 
+// exports.createCheckoutSession = async (order, res, next) => {
+//   console.log(order);
+//   try {
+//     const { store, orderItems, platformFee, tax } = order;
+//     const orderStore = await storeModel.findById(store);
+//     // const platformFee = 500;
+
+//     let line_items = [];
+//     orderItems.forEach((element) => {
+//       line_items.push({
+//         price_data: {
+//           currency: "usd",
+//           product_data: { name: element.productName },
+//           unit_amount: element.price * 100,
+//         },
+//         quantity: element.quantity,
+//       });
+//     });
+
+//     line_items.push({
+//       price_data: {
+//         currency: "usd",
+//         product_data: { name: "Platform Fee" },
+//         unit_amount: platformFee * 100,
+//       },
+//       quantity: 1,
+//     });
+
+//     line_items.push({
+//       price_data: {
+//         currency: "usd",
+//         product_data: { name: "Tax" },
+//         unit_amount: tax * 100,
+//       },
+//       quantity: 1,
+//     });
+
+//     // Create PaymentIntent
+//     // const paymentIntent = await stripe.paymentIntents.create({
+//     //   amount:
+//     //     orderItems.reduce(
+//     //       (sum, item) => sum + item.price * 100 * item.quantity,
+//     //       0
+//     //     ) +
+//     //     platformFee +
+//     //     tax,
+//     //   currency: "usd",
+//     //   application_fee_amount: platformFee,
+//     //   transfer_data: {
+//     //     destination: orderStore.stripeConnectedAccountId, //'acct_1PWhEc2ezAIxHOBh' //orderStore.stripeConnectedAccountId,
+//     //   },
+//     // });
+
+//     // Create Checkout Session with the created PaymentIntent
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       line_items,
+//       mode: "payment",
+//       payment_intent_data: {
+//         application_fee_amount: platformFee * 100,
+//         transfer_data: {
+//           destination: orderStore.stripeConnectedAccountId,
+//         },
+//       },
+//       success_url: `${process.env.BaseUrl}/api/v1/payment/payment-success?orderId=${order._id}&transactionId={CHECKOUT_SESSION_ID}`,
+//       cancel_url: `${process.env.BaseUrl}/api/v1/payment/payment-failed?orderId=${order._id}`,
+//     });
+//     return res.json({
+//       status: "success",
+//       data: {
+//         url: session.url,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error creating checkout session: ", error);
+//     //next(error); // Pass error to the next middleware or error handler
+//   }
+// };
+
+// exports.creatependingCheckoutSession = async (order, res, next) => {
+//   console.log(order.body);
+//   try {
+//     const { store, orderItems, platformFee, tax } = order.body;
+//     const orderStore = await storeModel.findById(store);
+//     // const platformFee = 500;
+
+//     let line_items = [];
+//     orderItems.forEach((element) => {
+//       line_items.push({
+//         price_data: {
+//           currency: "usd",
+//           product_data: { name: element.productName },
+//           unit_amount: element.price * 100,
+//         },
+//         quantity: element.quantity,
+//       });
+//     });
+
+//     line_items.push({
+//       price_data: {
+//         currency: "usd",
+//         product_data: { name: "Platform Fee" },
+//         unit_amount: platformFee * 100,
+//       },
+//       quantity: 1,
+//     });
+
+//     line_items.push({
+//       price_data: {
+//         currency: "usd",
+//         product_data: { name: "Tax" },
+//         unit_amount: tax * 100,
+//       },
+//       quantity: 1,
+//     });
+
+//     // Create PaymentIntent
+//     // const paymentIntent = await stripe.paymentIntents.create({
+//     //   amount:
+//     //     orderItems.reduce(
+//     //       (sum, item) => sum + item.price * 100 * item.quantity,
+//     //       0
+//     //     ) +
+//     //     platformFee +
+//     //     tax,
+//     //   currency: "usd",
+//     //   application_fee_amount: platformFee,
+//     //   transfer_data: {
+//     //     destination: orderStore.stripeConnectedAccountId, //'acct_1PWhEc2ezAIxHOBh' //orderStore.stripeConnectedAccountId,
+//     //   },
+//     // });
+
+//     // Create Checkout Session with the created PaymentIntent
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       line_items,
+//       mode: "payment",
+//       payment_intent_data: {
+//         application_fee_amount: platformFee * 100,
+//         transfer_data: {
+//           destination: orderStore.stripeConnectedAccountId,
+//         },
+//       },
+//       success_url: `${process.env.BaseUrl}/api/v1/payment/payment-success?orderId=${order.body._id}&transactionId={CHECKOUT_SESSION_ID}`,
+//       cancel_url: `${process.env.BaseUrl}/api/v1/payment/payment-failed?orderId=${order.body._id}`,
+//     });
+//     return res.json({
+//       status: "success",
+//       data: {
+//         url: session.url,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error creating checkout session: ", error);
+//     //next(error); // Pass error to the next middleware or error handler
+//   }
+// };
+
+
 exports.createCheckoutSession = async (order, res, next) => {
   console.log(order);
   try {
     const { store, orderItems, platformFee, tax } = order;
     const orderStore = await storeModel.findById(store);
     // const platformFee = 500;
-
     let line_items = [];
     orderItems.forEach((element) => {
       line_items.push({
         price_data: {
           currency: "usd",
           product_data: { name: element.productName },
-          unit_amount: element.price * 100,
+          unit_amount: Math.round(element.price * 100),
         },
         quantity: element.quantity,
       });
     });
-
     line_items.push({
       price_data: {
         currency: "usd",
         product_data: { name: "Platform Fee" },
-        unit_amount: platformFee * 100,
+        unit_amount: Math.round(platformFee * 100),
       },
       quantity: 1,
     });
-
     line_items.push({
       price_data: {
         currency: "usd",
         product_data: { name: "Tax" },
-        unit_amount: tax * 100,
+        unit_amount: Math.round(tax * 100),
       },
       quantity: 1,
     });
-
     // Create PaymentIntent
     // const paymentIntent = await stripe.paymentIntents.create({
     //   amount:
@@ -58,14 +213,13 @@ exports.createCheckoutSession = async (order, res, next) => {
     //     destination: orderStore.stripeConnectedAccountId, //'acct_1PWhEc2ezAIxHOBh' //orderStore.stripeConnectedAccountId,
     //   },
     // });
-
     // Create Checkout Session with the created PaymentIntent
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
       payment_intent_data: {
-        application_fee_amount: platformFee * 100,
+        application_fee_amount: Math.round(platformFee * 100),
         transfer_data: {
           destination: orderStore.stripeConnectedAccountId,
         },
@@ -84,44 +238,39 @@ exports.createCheckoutSession = async (order, res, next) => {
     //next(error); // Pass error to the next middleware or error handler
   }
 };
-
 exports.creatependingCheckoutSession = async (order, res, next) => {
   console.log(order.body);
   try {
     const { store, orderItems, platformFee, tax } = order.body;
     const orderStore = await storeModel.findById(store);
     // const platformFee = 500;
-
     let line_items = [];
     orderItems.forEach((element) => {
       line_items.push({
         price_data: {
           currency: "usd",
           product_data: { name: element.productName },
-          unit_amount: element.price * 100,
+          unit_amount: Math.round(element.price * 100),
         },
         quantity: element.quantity,
       });
     });
-
     line_items.push({
       price_data: {
         currency: "usd",
         product_data: { name: "Platform Fee" },
-        unit_amount: platformFee * 100,
+        unit_amount: Math.round(platformFee * 100),
       },
       quantity: 1,
     });
-
     line_items.push({
       price_data: {
         currency: "usd",
         product_data: { name: "Tax" },
-        unit_amount: tax * 100,
+        unit_amount: Math.round(tax * 100),
       },
       quantity: 1,
     });
-
     // Create PaymentIntent
     // const paymentIntent = await stripe.paymentIntents.create({
     //   amount:
@@ -137,14 +286,13 @@ exports.creatependingCheckoutSession = async (order, res, next) => {
     //     destination: orderStore.stripeConnectedAccountId, //'acct_1PWhEc2ezAIxHOBh' //orderStore.stripeConnectedAccountId,
     //   },
     // });
-
     // Create Checkout Session with the created PaymentIntent
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items,
       mode: "payment",
       payment_intent_data: {
-        application_fee_amount: platformFee * 100,
+        application_fee_amount: Math.round(platformFee * 100),
         transfer_data: {
           destination: orderStore.stripeConnectedAccountId,
         },
@@ -163,6 +311,8 @@ exports.creatependingCheckoutSession = async (order, res, next) => {
     //next(error); // Pass error to the next middleware or error handler
   }
 };
+
+
 exports.connectStripeAccount = async (req, res) => {
   const state = req.params.id;
 
