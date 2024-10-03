@@ -636,6 +636,43 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
   }
 });
 
+// Helper function to send order notification email
+async function sendOrderNotificationEmail(orderList) {
+  const products = orderList?.orderItems?.map((orderItem) => ({
+    image: `https://backened.skipaline.com/${orderItem.product.image}`,
+    productName: orderItem.product.productName,
+    quantity: orderItem.quantity,
+    price: orderItem.product.price,
+    category: orderItem.product.category.categoryName,
+  }));
+
+  const message = `Your order has been placed successfully.`;
+
+  const htmlTemplate = fs.readFileSync(
+    "./template/13-order-placed.html",
+    "utf8"
+  );
+  const compiledTemplate = handlebars.compile(htmlTemplate);
+  const htmlModified = compiledTemplate({
+    products,
+    orderNumber: orderList._id,
+    orderMessage: "ORDER PLACED",
+    subtotal: orderList.itemsPrice,
+    platformFee: orderList.platformFee,
+    tax: orderList.tax,
+    total: parseFloat(
+      (orderList.itemsPrice + orderList.platformFee + orderList.tax).toFixed(2)
+    ),
+  });
+
+  await sendEmailWithTemplate({
+    email: orderList.user.email,
+    subject: "Skip A Line - Order Placed",
+    message,
+    htmlModified,
+  });
+}
+
 exports.getAllUserOrdersByStoreOwner = asyncErrorCatch(
   async (req, res, next) => {
     if (!req.body.store) {

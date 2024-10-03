@@ -232,7 +232,7 @@ exports.paymentSuccess = async (req, res, next) => {
     const updatedOrder = await orderModel.findByIdAndUpdate(
       orderId,
       {
-        paymentInfo: { transactionId, status: "test", paidAt: Date.now() },
+        paymentInfo: { transactionId, status: "completed", paidAt: Date.now() },
       },
       { new: true }
     );
