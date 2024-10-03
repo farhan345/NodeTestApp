@@ -22,8 +22,452 @@ cron.schedule("*/1 * * * *", async () => {
   }
 });
 // Create new Order
+// exports.newOrder = asyncErrorCatch(async (req, res, next) => {
+//   let count = 0;
+//   if (!req.body.orderItems) {
+//     return next(new ErrorHandler(400, "Please enter order items"));
+//   }
+//   if (!req.body.itemsPrice) {
+//     return next(new ErrorHandler(400, "Please enter order items price"));
+//   }
+//   if (!req.body.platformFee) {
+//     return next(new ErrorHandler(400, "Platform fee not found"));
+//   }
+//   if (!req.body.totalPrice) {
+//     return next(new ErrorHandler(400, "Items Total not found"));
+//   }
+//   if (!req.body.user) {
+//     return next(new ErrorHandler(400, "Please enter user Id"));
+//   }
+//   if (!req.body.store) {
+//     return next(new ErrorHandler(400, "Store Id Not Found"));
+//   }
+//   // if (!req.body.tax) {
+//   //   return next(new ErrorHandler(400, "Please enter tax"));
+//   // }
+//   // if (!req.body.paymentInfo) {
+//   //     return next(new ErrorHandler(400, "Please enter payment info"))
+//   // }
+
+//   // if (!req.body.paymentInfo.transactionId) {
+//   //     return next(new ErrorHandler(400, "Please enter payment transaction Id"))
+//   // }
+
+//   // if (!req.body.paymentInfo.status) {
+//   //     return next(new ErrorHandler(400, "Please enter payment transaction status"))
+//   // }
+//   for (let j = 0; j < req.body?.orderItems?.length; j++) {
+//     if (!req.body.orderItems[j].productName) {
+//       return next(
+//         new ErrorHandler(
+//           400,
+//           `Please enter your${
+//             req.body.orderItems.length > 1 ? `${j + 1}` : ""
+//           } order item product name`
+//         )
+//       );
+//     } else if (!req.body.orderItems[j].price) {
+//       return next(
+//         new ErrorHandler(
+//           400,
+//           `Please enter your${
+//             req.body.orderItems.length > 1 ? `${j + 1}` : ""
+//           } order item product price`
+//         )
+//       );
+//     } else if (!req.body.orderItems[j].quantity) {
+//       return next(
+//         new ErrorHandler(
+//           400,
+//           `Please enter your${
+//             req.body.orderItems.length > 1 ? `${j + 1}` : ""
+//           } order item product quantity`
+//         )
+//       );
+//     } else if (!req.body.orderItems[j].product) {
+//       return next(
+//         new ErrorHandler(
+//           400,
+//           `Please enter your${
+//             req.body.orderItems.length > 1 ? `${j + 1}` : ""
+//           } order item product product Id`
+//         )
+//       );
+//     }
+//   }
+//   const {
+//     orderItems,
+//     itemsPrice,
+//     isOnlineOrder,
+//     platformFee,
+//     totalPrice,
+//     user,
+//     store,
+//     tax,
+//   } = req.body;
+//   let paymentInfo = { status: "pending", method: "stripe" };
+
+//   let productOrderQuantity = 0;
+
+//   if (isOnlineOrder) {
+//     const userCart = await cartModel.findOne({
+//       user: user,
+//       store: store,
+//       status: "active",
+//     });
+//     if (!userCart) {
+//       return next(new ErrorHandler(404, "User cart not found"));
+//     } else {
+//       cartModel.findOneAndDelete(
+//         { user: user, store: store, status: "active" },
+//         (err, result) => {
+//           if (err) {
+//             return next(400, err.message);
+//           } else {
+//             orderModel.create(
+//               {
+//                 orderItems,
+//                 paymentInfo,
+//                 itemsPrice: parseFloat(itemsPrice).toFixed(2),
+//                 isOnlineOrder,
+//                 platformFee: parseFloat(platformFee).toFixed(2),
+//                 totalPrice: parseFloat(totalPrice).toFixed(2),
+//                 user,
+//                 tax: parseFloat(tax).toFixed(2),
+//                 orderType: isOnlineOrder ? "Promo Deals" : "InStore",
+//                 //  orderType: isOnlineOrder ? "Promo Deals" : "InStore",
+//                 orderStatus: isOnlineOrder
+//                   ? "665d924f0c58a92b7e224086"
+//                   : "665d924f0c58a92b7e224086",
+//                 store,
+//                 expirationTime: new Date(Date.now() + 10 * 60 * 1000),
+//               },
+//               async (err, result) => {
+//                 if (err) {
+//                   return next(new ErrorHandler(400, err.message));
+//                 }
+//                 if (result) {
+//                   const orderList = await orderModel
+//                     .findById(result?._id)
+//                     .populate({
+//                       path: "orderItems.product",
+//                       populate: {
+//                         path: "category",
+//                       },
+//                     })
+//                     .populate("user");
+//                   const products = orderList?.orderItems?.map((orderItem) => ({
+//                     image: `https://backened.skipaline.com/${orderItem.product.image}`,
+//                     productName: orderItem.product.productName,
+//                     quantity: orderItem.quantity,
+//                     price: orderItem.product.discountedPrice,
+//                     category: orderItem.product.category.categoryName,
+//                   }));
+
+//                   console.log(orderList, "orderList");
+//                   const message = `your email verification OTP is :- \n\n\n\n
+//             if you have not requested this email then please ignore it`;
+
+//                   const htmlTemplate = fs.readFileSync(
+//                     "./template/13-order-placed.html",
+//                     "utf8"
+//                   );
+//                   const compiledTemplate = handlebars.compile(htmlTemplate);
+//                   const htmlModified = compiledTemplate({
+//                     products,
+//                     orderNumber: result?._id,
+//                     orderMessage: "ORDER PLACED",
+//                     subtotal: result?.itemsPrice,
+//                     platformFee: result?.platformFee,
+//                     tax: result?.tax,
+//                     total: parseFloat(
+//                       (
+//                         result?.itemsPrice +
+//                         result?.platformFee +
+//                         result?.tax
+//                       ).toFixed(2)
+//                     ),
+//                   });
+
+//                   sendEmailWithTemplate({
+//                     email: orderList?.user?.email,
+//                     subject: "Skip A Line",
+//                     message,
+//                     htmlModified,
+//                   })
+//                     .then((data) => {})
+//                     .catch((err) => {});
+//                   // res.status(200).json({
+//                   //     code: result?._id,
+//                   //     success: true,
+//                   //     message: "Order placed successfully",
+//                   //     orderList
+//                   // });
+//                   createCheckoutSession(result, res);
+//                 }
+//               }
+//             );
+//           }
+//         }
+//       );
+//     }
+//   }
+//   if (!isOnlineOrder) {
+//     for (let i = 0; i < orderItems?.length; i++) {
+//       productOrderQuantity = orderItems[i]?.quantity;
+//       const orderProduct = await productModel.findOne({
+//         _id: orderItems[i]?.product,
+//       });
+//       if (productOrderQuantity >= orderProduct?.quantity) {
+//         orderProduct.quantity = 0;
+//         orderProduct.save({ validateBeforeSave: false }, (err, result) => {
+//           if (err) {
+//             return next(new ErrorHandler(400, err.message));
+//           } else {
+//             count++;
+//             console.log("count if", count);
+//             if (count === orderItems?.length) {
+//               orderModel.create(
+//                 {
+//                   orderItems,
+//                   paymentInfo,
+//                   itemsPrice: parseFloat(itemsPrice).toFixed(2),
+//                   isOnlineOrder,
+//                   platformFee: parseFloat(platformFee).toFixed(2),
+//                   totalPrice: parseFloat(totalPrice).toFixed(2),
+//                   tax: parseFloat(tax).toFixed(2),
+//                   user,
+//                   orderType: isOnlineOrder ? "Promo Deals" : "InStore",
+//                   orderStatus: isOnlineOrder
+//                     ? "665d924f0c58a92b7e224086"
+//                     : "665d924f0c58a92b7e224086",
+//                   store,
+//                   expirationTime: new Date(Date.now() + 2 * 60 * 1000),
+//                 },
+//                 async (err, result) => {
+//                   if (err) {
+//                     return next(new ErrorHandler(400, err.message));
+//                   }
+//                   if (result) {
+//                     const orderList = await orderModel
+//                       .findById(result?._id)
+//                       .populate({
+//                         path: "orderItems.product",
+//                         populate: {
+//                           path: "category",
+//                         },
+//                       })
+//                       .populate("user");
+//                     const products = orderList?.orderItems?.map(
+//                       (orderItem) => ({
+//                         image: `https://backened.skipaline.com/${orderItem.product.image}`,
+//                         productName: orderItem.product.productName,
+//                         quantity: orderItem.quantity,
+//                         price: orderItem.product.price,
+//                         category: orderItem.product.category.categoryName,
+//                       })
+//                     );
+
+//                     console.log(orderList, "orderList");
+//                     const message = `your email verification OTP is :- \n\n\n\n
+//                     if you have not requested this email then please ignore it`;
+
+//                     const htmlTemplate = fs.readFileSync(
+//                       "./template/13-order-placed.html",
+//                       "utf8"
+//                     );
+//                     const compiledTemplate = handlebars.compile(htmlTemplate);
+//                     const htmlModified = compiledTemplate({
+//                       products,
+//                       orderNumber: result?._id,
+//                       orderMessage: "ORDER PLACED",
+//                       subtotal: result?.itemsPrice,
+//                       platformFee: result?.platformFee,
+//                       tax: result?.tax,
+//                       total: parseFloat(
+//                         (
+//                           result?.itemsPrice +
+//                           result?.platformFee +
+//                           result?.tax
+//                         ).toFixed(2)
+//                       ),
+//                     });
+
+//                     sendEmailWithTemplate({
+//                       email: orderList?.user?.email,
+//                       subject: "Skip A Line",
+//                       message,
+//                       htmlModified,
+//                     })
+//                       .then((data) => {})
+//                       .catch((err) => {});
+
+//                     createCheckoutSession(result, res);
+//                     // res.status(201).json({
+//                     //   code: result?._id,
+//                     //   success: true,
+//                     //   message: "Order placed successfully",
+//                     //   orderList,
+//                     // });
+//                   }
+//                 }
+//               );
+//             }
+//           }
+//         });
+//       } else {
+//         orderProduct.quantity -= orderItems[i]?.quantity;
+//         orderProduct.save({ validateBeforeSave: false }, (err, result) => {
+//           if (err) {
+//             return next(new ErrorHandler(400, err.message));
+//           } else {
+//             count++;
+//             console.log("count elde", count);
+//             if (count === orderItems?.length) {
+//               orderModel.create(
+//                 {
+//                   orderItems,
+//                   paymentInfo,
+//                   itemsPrice: parseFloat(itemsPrice).toFixed(2),
+//                   isOnlineOrder,
+//                   platformFee: parseFloat(platformFee).toFixed(2),
+//                   totalPrice: parseFloat(totalPrice).toFixed(2),
+//                   tax: parseFloat(tax).toFixed(2),
+//                   user,
+//                   orderType: isOnlineOrder ? "Promo Deals" : "InStore",
+//                   orderStatus: isOnlineOrder
+//                     ? "665d924f0c58a92b7e224086"
+//                     : "665d924f0c58a92b7e224086",
+//                   store,
+//                 },
+//                 async (err, result) => {
+//                   if (err) {
+//                     return next(new ErrorHandler(400, err.message));
+//                   }
+//                   if (result) {
+//                     const orderList = await orderModel
+//                       .findById(result?._id)
+//                       .populate({
+//                         path: "orderItems.product",
+//                         populate: {
+//                           path: "category",
+//                         },
+//                       })
+//                       .populate("user");
+//                     const products = orderList?.orderItems?.map(
+//                       (orderItem) => ({
+//                         image: `https://backened.skipaline.com/${orderItem.product.image}`,
+//                         productName: orderItem.product.productName,
+//                         quantity: orderItem.quantity,
+//                         price: orderItem.product.price,
+//                         category: orderItem.product.category.categoryName,
+//                       })
+//                     );
+
+//                     console.log(orderList, "orderList");
+//                     const message = `your email verification OTP is :- \n\n\n\n
+//                     if you have not requested this email then please ignore it`;
+
+//                     const htmlTemplate = fs.readFileSync(
+//                       "./template/13-order-placed.html",
+//                       "utf8"
+//                     );
+//                     const compiledTemplate = handlebars.compile(htmlTemplate);
+//                     const htmlModified = compiledTemplate({
+//                       products,
+//                       orderNumber: result?._id,
+//                       orderMessage: "ORDER PLACED",
+//                       subtotal: result?.itemsPrice,
+//                       platformFee: result?.platformFee,
+//                       tax: result?.tax,
+//                       total: parseFloat(
+//                         (
+//                           result?.itemsPrice +
+//                           result?.platformFee +
+//                           result?.tax
+//                         ).toFixed(2)
+//                       ),
+//                     });
+
+//                     sendEmailWithTemplate({
+//                       email: orderList?.user?.email,
+//                       subject: "Skip A Line",
+//                       message,
+//                       htmlModified,
+//                     })
+//                       .then((data) => {})
+//                       .catch((err) => {});
+//                     // res.status(200).json({
+//                     //     code: result?._id,
+//                     //     success: true,
+//                     //     message: "Order placed successfully",
+//                     //     orderList
+//                     // });
+
+//                     createCheckoutSession(result, res);
+//                   }
+//                 }
+//               );
+//             }
+//           }
+//         });
+//       }
+//       console.log("count", count);
+
+//       // productModel.findOneAndUpdate(
+//       //     { _id: orderItems[i]?.product },
+//       //     { $inc: { quantity: -orderItems[i]?.quantity } },
+//       //     { new: true },
+//       //     (err, updated) => {
+//       //         console.log("de");
+//       //         if (err) {
+//       //             return next(new ErrorHandler(400, err.message));
+//       //         } else {
+//       //             console.log(updated);
+//       //             count++;
+//       //             console.log(count, "count");
+//       //             if (count === orderItems?.length) {
+//       //                 orderModel.create({
+//       //                     orderItems,
+//       //                     paymentInfo,
+//       //                     itemsPrice: parseFloat(itemsPrice).toFixed(2),
+//       //                     isOnlineOrder,
+//       //                     shippingPrice: parseFloat(shippingPrice).toFixed(2),
+//       //                     totalPrice: parseFloat(totalPrice).toFixed(2),
+//       //                     user,
+//       //                     orderType: isOnlineOrder ? "Promo Deals" : "InStore",
+//       //                     orderStatus: isOnlineOrder ? "64394488439d40de5a6f1243" : "641d64f1d225a66ae3f9a845",
+//       //                     store
+
+//       //                 }, (err, result) => {
+//       //                     if (err) {
+//       //                         return next(new ErrorHandler(400, err.message))
+//       //                     }
+//       //                     if (result) {
+
+//       //                         console.log(result, "result");
+
+//       //                         res.status(201).json({
+//       //                             code: result?._id,
+//       //                             success: true,
+//       //                             message: "Order placed successfully"
+//       //                         });
+//       //                     }
+//       //                 });
+
+//       //             }
+
+//       //         }
+//       //     }
+//       // );
+//     }
+//   }
+// });
+
 exports.newOrder = asyncErrorCatch(async (req, res, next) => {
   let count = 0;
+
+  // Input validation
   if (!req.body.orderItems) {
     return next(new ErrorHandler(400, "Please enter order items"));
   }
@@ -42,27 +486,15 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
   if (!req.body.store) {
     return next(new ErrorHandler(400, "Store Id Not Found"));
   }
-  // if (!req.body.tax) {
-  //   return next(new ErrorHandler(400, "Please enter tax"));
-  // }
-  // if (!req.body.paymentInfo) {
-  //     return next(new ErrorHandler(400, "Please enter payment info"))
-  // }
 
-  // if (!req.body.paymentInfo.transactionId) {
-  //     return next(new ErrorHandler(400, "Please enter payment transaction Id"))
-  // }
-
-  // if (!req.body.paymentInfo.status) {
-  //     return next(new ErrorHandler(400, "Please enter payment transaction status"))
-  // }
+  // Validate individual order items
   for (let j = 0; j < req.body?.orderItems?.length; j++) {
     if (!req.body.orderItems[j].productName) {
       return next(
         new ErrorHandler(
           400,
           `Please enter your${
-            req.body.orderItems.length > 1 ? `${j + 1}` : ""
+            req.body.orderItems.length > 1 ? ` ${j + 1}` : ""
           } order item product name`
         )
       );
@@ -71,7 +503,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
         new ErrorHandler(
           400,
           `Please enter your${
-            req.body.orderItems.length > 1 ? `${j + 1}` : ""
+            req.body.orderItems.length > 1 ? ` ${j + 1}` : ""
           } order item product price`
         )
       );
@@ -80,7 +512,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
         new ErrorHandler(
           400,
           `Please enter your${
-            req.body.orderItems.length > 1 ? `${j + 1}` : ""
+            req.body.orderItems.length > 1 ? ` ${j + 1}` : ""
           } order item product quantity`
         )
       );
@@ -89,12 +521,13 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
         new ErrorHandler(
           400,
           `Please enter your${
-            req.body.orderItems.length > 1 ? `${j + 1}` : ""
+            req.body.orderItems.length > 1 ? ` ${j + 1}` : ""
           } order item product product Id`
         )
       );
     }
   }
+
   const {
     orderItems,
     itemsPrice,
@@ -117,101 +550,41 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
     });
     if (!userCart) {
       return next(new ErrorHandler(404, "User cart not found"));
-    } else {
-      cartModel.findOneAndDelete(
-        { user: user, store: store, status: "active" },
-        (err, result) => {
-          if (err) {
-            return next(400, err.message);
-          } else {
-            orderModel.create(
-              {
-                orderItems,
-                paymentInfo,
-                itemsPrice: parseFloat(itemsPrice).toFixed(2),
-                isOnlineOrder,
-                platformFee: parseFloat(platformFee).toFixed(2),
-                totalPrice: parseFloat(totalPrice).toFixed(2),
-                user,
-                tax: parseFloat(tax).toFixed(2),
-                orderType: isOnlineOrder ? "Promo Deals" : "InStore",
-                //  orderType: isOnlineOrder ? "Promo Deals" : "InStore",
-                orderStatus: isOnlineOrder
-                  ? "665d924f0c58a92b7e224086"
-                  : "665d924f0c58a92b7e224086",
-                store,
-                expirationTime: new Date(Date.now() + 10 * 60 * 1000),
-              },
-              async (err, result) => {
-                if (err) {
-                  return next(new ErrorHandler(400, err.message));
-                }
-                if (result) {
-                  const orderList = await orderModel
-                    .findById(result?._id)
-                    .populate({
-                      path: "orderItems.product",
-                      populate: {
-                        path: "category",
-                      },
-                    })
-                    .populate("user");
-                  const products = orderList?.orderItems?.map((orderItem) => ({
-                    image: `https://backened.skipaline.com/${orderItem.product.image}`,
-                    productName: orderItem.product.productName,
-                    quantity: orderItem.quantity,
-                    price: orderItem.product.discountedPrice,
-                    category: orderItem.product.category.categoryName,
-                  }));
+    }
+    
+    try {
+      const order = await orderModel.create({
+        orderItems,
+        paymentInfo,
+        itemsPrice: parseFloat(itemsPrice).toFixed(2),
+        isOnlineOrder,
+        platformFee: parseFloat(platformFee).toFixed(2),
+        totalPrice: parseFloat(totalPrice).toFixed(2),
+        user,
+        tax: parseFloat(tax).toFixed(2),
+        orderType: "Promo Deals",
+        orderStatus: "665d924f0c58a92b7e224086",
+        store,
+        expirationTime: new Date(Date.now() + 10 * 60 * 1000),
+      });
 
-                  console.log(orderList, "orderList");
-                  const message = `your email verification OTP is :- \n\n\n\n
-            if you have not requested this email then please ignore it`;
+      const orderList = await orderModel
+        .findById(order._id)
+        .populate({
+          path: "orderItems.product",
+          populate: {
+            path: "category",
+          },
+        })
+        .populate("user");
 
-                  const htmlTemplate = fs.readFileSync(
-                    "./template/13-order-placed.html",
-                    "utf8"
-                  );
-                  const compiledTemplate = handlebars.compile(htmlTemplate);
-                  const htmlModified = compiledTemplate({
-                    products,
-                    orderNumber: result?._id,
-                    orderMessage: "ORDER PLACED",
-                    subtotal: result?.itemsPrice,
-                    platformFee: result?.platformFee,
-                    tax: result?.tax,
-                    total: parseFloat(
-                      (
-                        result?.itemsPrice +
-                        result?.platformFee +
-                        result?.tax
-                      ).toFixed(2)
-                    ),
-                  });
-
-                  sendEmailWithTemplate({
-                    email: orderList?.user?.email,
-                    subject: "Skip A Line",
-                    message,
-                    htmlModified,
-                  })
-                    .then((data) => {})
-                    .catch((err) => {});
-                  // res.status(200).json({
-                  //     code: result?._id,
-                  //     success: true,
-                  //     message: "Order placed successfully",
-                  //     orderList
-                  // });
-                  createCheckoutSession(result, res);
-                }
-              }
-            );
-          }
-        }
-      );
+      await sendOrderNotificationEmail(orderList);
+      return createCheckoutSession(order, res);
+    } catch (error) {
+      return next(new ErrorHandler(400, error.message));
     }
   }
+
   if (!isOnlineOrder) {
     for (let i = 0; i < orderItems?.length; i++) {
       productOrderQuantity = orderItems[i]?.quantity;
@@ -220,246 +593,45 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
       });
       if (productOrderQuantity >= orderProduct?.quantity) {
         orderProduct.quantity = 0;
-        orderProduct.save({ validateBeforeSave: false }, (err, result) => {
-          if (err) {
-            return next(new ErrorHandler(400, err.message));
-          } else {
-            count++;
-            console.log("count if", count);
-            if (count === orderItems?.length) {
-              orderModel.create(
-                {
-                  orderItems,
-                  paymentInfo,
-                  itemsPrice: parseFloat(itemsPrice).toFixed(2),
-                  isOnlineOrder,
-                  platformFee: parseFloat(platformFee).toFixed(2),
-                  totalPrice: parseFloat(totalPrice).toFixed(2),
-                  tax: parseFloat(tax).toFixed(2),
-                  user,
-                  orderType: isOnlineOrder ? "Promo Deals" : "InStore",
-                  orderStatus: isOnlineOrder
-                    ? "665d924f0c58a92b7e224086"
-                    : "665d924f0c58a92b7e224086",
-                  store,
-                  expirationTime: new Date(Date.now() + 2 * 60 * 1000),
-                },
-                async (err, result) => {
-                  if (err) {
-                    return next(new ErrorHandler(400, err.message));
-                  }
-                  if (result) {
-                    const orderList = await orderModel
-                      .findById(result?._id)
-                      .populate({
-                        path: "orderItems.product",
-                        populate: {
-                          path: "category",
-                        },
-                      })
-                      .populate("user");
-                    const products = orderList?.orderItems?.map(
-                      (orderItem) => ({
-                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
-                        productName: orderItem.product.productName,
-                        quantity: orderItem.quantity,
-                        price: orderItem.product.price,
-                        category: orderItem.product.category.categoryName,
-                      })
-                    );
-
-                    console.log(orderList, "orderList");
-                    const message = `your email verification OTP is :- \n\n\n\n
-                    if you have not requested this email then please ignore it`;
-
-                    const htmlTemplate = fs.readFileSync(
-                      "./template/13-order-placed.html",
-                      "utf8"
-                    );
-                    const compiledTemplate = handlebars.compile(htmlTemplate);
-                    const htmlModified = compiledTemplate({
-                      products,
-                      orderNumber: result?._id,
-                      orderMessage: "ORDER PLACED",
-                      subtotal: result?.itemsPrice,
-                      platformFee: result?.platformFee,
-                      tax: result?.tax,
-                      total: parseFloat(
-                        (
-                          result?.itemsPrice +
-                          result?.platformFee +
-                          result?.tax
-                        ).toFixed(2)
-                      ),
-                    });
-
-                    sendEmailWithTemplate({
-                      email: orderList?.user?.email,
-                      subject: "Skip A Line",
-                      message,
-                      htmlModified,
-                    })
-                      .then((data) => {})
-                      .catch((err) => {});
-
-                    createCheckoutSession(result, res);
-                    // res.status(201).json({
-                    //   code: result?._id,
-                    //   success: true,
-                    //   message: "Order placed successfully",
-                    //   orderList,
-                    // });
-                  }
-                }
-              );
-            }
-          }
-        });
       } else {
         orderProduct.quantity -= orderItems[i]?.quantity;
-        orderProduct.save({ validateBeforeSave: false }, (err, result) => {
-          if (err) {
-            return next(new ErrorHandler(400, err.message));
-          } else {
-            count++;
-            console.log("count elde", count);
-            if (count === orderItems?.length) {
-              orderModel.create(
-                {
-                  orderItems,
-                  paymentInfo,
-                  itemsPrice: parseFloat(itemsPrice).toFixed(2),
-                  isOnlineOrder,
-                  platformFee: parseFloat(platformFee).toFixed(2),
-                  totalPrice: parseFloat(totalPrice).toFixed(2),
-                  tax: parseFloat(tax).toFixed(2),
-                  user,
-                  orderType: isOnlineOrder ? "Promo Deals" : "InStore",
-                  orderStatus: isOnlineOrder
-                    ? "665d924f0c58a92b7e224086"
-                    : "665d924f0c58a92b7e224086",
-                  store,
-                },
-                async (err, result) => {
-                  if (err) {
-                    return next(new ErrorHandler(400, err.message));
-                  }
-                  if (result) {
-                    const orderList = await orderModel
-                      .findById(result?._id)
-                      .populate({
-                        path: "orderItems.product",
-                        populate: {
-                          path: "category",
-                        },
-                      })
-                      .populate("user");
-                    const products = orderList?.orderItems?.map(
-                      (orderItem) => ({
-                        image: `https://backened.skipaline.com/${orderItem.product.image}`,
-                        productName: orderItem.product.productName,
-                        quantity: orderItem.quantity,
-                        price: orderItem.product.price,
-                        category: orderItem.product.category.categoryName,
-                      })
-                    );
-
-                    console.log(orderList, "orderList");
-                    const message = `your email verification OTP is :- \n\n\n\n
-                    if you have not requested this email then please ignore it`;
-
-                    const htmlTemplate = fs.readFileSync(
-                      "./template/13-order-placed.html",
-                      "utf8"
-                    );
-                    const compiledTemplate = handlebars.compile(htmlTemplate);
-                    const htmlModified = compiledTemplate({
-                      products,
-                      orderNumber: result?._id,
-                      orderMessage: "ORDER PLACED",
-                      subtotal: result?.itemsPrice,
-                      platformFee: result?.platformFee,
-                      tax: result?.tax,
-                      total: parseFloat(
-                        (
-                          result?.itemsPrice +
-                          result?.platformFee +
-                          result?.tax
-                        ).toFixed(2)
-                      ),
-                    });
-
-                    sendEmailWithTemplate({
-                      email: orderList?.user?.email,
-                      subject: "Skip A Line",
-                      message,
-                      htmlModified,
-                    })
-                      .then((data) => {})
-                      .catch((err) => {});
-                    // res.status(200).json({
-                    //     code: result?._id,
-                    //     success: true,
-                    //     message: "Order placed successfully",
-                    //     orderList
-                    // });
-
-                    createCheckoutSession(result, res);
-                  }
-                }
-              );
-            }
-          }
-        });
       }
-      console.log("count", count);
+      await orderProduct.save({ validateBeforeSave: false });
+      count++;
+      
+      if (count === orderItems?.length) {
+        try {
+          const order = await orderModel.create({
+            orderItems,
+            paymentInfo,
+            itemsPrice: parseFloat(itemsPrice).toFixed(2),
+            isOnlineOrder,
+            platformFee: parseFloat(platformFee).toFixed(2),
+            totalPrice: parseFloat(totalPrice).toFixed(2),
+            tax: parseFloat(tax).toFixed(2),
+            user,
+            orderType: "InStore",
+            orderStatus: "665d924f0c58a92b7e224086",
+            store,
+            expirationTime: new Date(Date.now() + 2 * 60 * 1000),
+          });
 
-      // productModel.findOneAndUpdate(
-      //     { _id: orderItems[i]?.product },
-      //     { $inc: { quantity: -orderItems[i]?.quantity } },
-      //     { new: true },
-      //     (err, updated) => {
-      //         console.log("de");
-      //         if (err) {
-      //             return next(new ErrorHandler(400, err.message));
-      //         } else {
-      //             console.log(updated);
-      //             count++;
-      //             console.log(count, "count");
-      //             if (count === orderItems?.length) {
-      //                 orderModel.create({
-      //                     orderItems,
-      //                     paymentInfo,
-      //                     itemsPrice: parseFloat(itemsPrice).toFixed(2),
-      //                     isOnlineOrder,
-      //                     shippingPrice: parseFloat(shippingPrice).toFixed(2),
-      //                     totalPrice: parseFloat(totalPrice).toFixed(2),
-      //                     user,
-      //                     orderType: isOnlineOrder ? "Promo Deals" : "InStore",
-      //                     orderStatus: isOnlineOrder ? "64394488439d40de5a6f1243" : "641d64f1d225a66ae3f9a845",
-      //                     store
+          const orderList = await orderModel
+            .findById(order._id)
+            .populate({
+              path: "orderItems.product",
+              populate: {
+                path: "category",
+              },
+            })
+            .populate("user");
 
-      //                 }, (err, result) => {
-      //                     if (err) {
-      //                         return next(new ErrorHandler(400, err.message))
-      //                     }
-      //                     if (result) {
-
-      //                         console.log(result, "result");
-
-      //                         res.status(201).json({
-      //                             code: result?._id,
-      //                             success: true,
-      //                             message: "Order placed successfully"
-      //                         });
-      //                     }
-      //                 });
-
-      //             }
-
-      //         }
-      //     }
-      // );
+          await sendOrderNotificationEmail(orderList);
+          return createCheckoutSession(order, res);
+        } catch (error) {
+          return next(new ErrorHandler(400, error.message));
+        }
+      }
     }
   }
 });
