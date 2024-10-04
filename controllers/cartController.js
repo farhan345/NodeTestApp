@@ -316,6 +316,107 @@ async function createNewCart(
 
 // })
 
+// exports.getAllProductsThatHaveInCart = asyncErrorCatch(
+//   async (req, res, next) => {
+//     if (!req.body.user) {
+//       return next(new ErrorHandler(400, "Please enter user Id"));
+//     }
+//     if (!req.body.store) {
+//       return next(new ErrorHandler(400, "Please enter store Id"));
+//     }
+//     const fifteenMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+//     // console.log(fifteenMinutesAgo);
+//     const products = await cartModel
+//       .findOne({
+//         user: req.body.user,
+//         store: req.body.store,
+//         createdAt: { $gt: fifteenMinutesAgo },
+//       })
+//       .populate({
+//         path: "orderItems.product",
+//         select:
+//           "productName price quantity image discountedPrice isAvailableInOffer store category offPercentage dateTillAvailableInOffer isTaxable obj.stock",
+//         populate: { path: "category", select: "categoryName" },
+//       });
+
+//     // console.log(products);
+//     if (products === null) {
+//       res
+//         .status(200)
+//         .json({
+//           success: true,
+//           status: "expired",
+//           message: "All offer products retrieved successfully",
+//         });
+//     } else {
+//       const orderProducts = products.orderItems;
+//       // console.log(orderProducts);
+//       let prodId = [];
+//       const productInfo = orderProducts.map((obj) => {
+//         console.log(obj, "obj");
+//         const product = obj.product;
+//         const stock = obj.quantity;
+
+//         return {
+//           _id: product._id,
+//           addedQuantity: stock,
+//           productName: product.productName,
+//           price: product.price,
+//           quantity: product.quantity,
+//           image: product.image,
+//           discountedPrice: product.discountedPrice,
+//           isAvailableInOffer: product.isAvailableInOffer,
+//           store: product.store,
+//           category: product.category,
+//           offPercentage: product.offPercentage,
+//           dateTillAvailableInOffer: product.dateTillAvailableInOffer,
+//           isTaxable: product.isTaxable,
+//         };
+//       });
+
+//       if (productInfo?.length === 0) {
+//         return next(new ErrorHandler(404, "No Product Found"));
+//       } else {
+//         const offerProducts = await offerModel.find(
+//           { store: req.body.store },
+//           { offerProducts: 1 }
+//         );
+//         if (offerProducts.length === 0) {
+//           return next(new ErrorHandler(404, "No product found"));
+//         } else {
+//           const updatedProducts = productInfo.map((product) => {
+//             // Find the offerProducts array that contains the current product's _id
+//             const offerProduct = offerProducts.find((offerProduct) =>
+//               offerProduct.offerProducts.find((offer) => {
+//                 if (new ObjectId(offer.product).equals(product._id)) {
+//                   // If a matching offer product is found, add its stock field to the current product object
+//                   product.quantity = offer.stock;
+//                   // console.log(product.price, offer.stock, "line");
+//                   return true;
+//                 }
+//               })
+//             );
+//             // console.log(product);
+//             // Return the updated product object
+//             return product;
+//           });
+//           res
+//             .status(200)
+//             .json({
+//               success: true,
+//               products: updatedProducts,
+//               status: products.status,
+//               message: "All offer products retrieved successfully",
+//               user: products.user,
+//               store: products.store,
+//               _id: products._id,
+//             });
+//         }
+//       }
+//     }
+//   }
+// );
+
 exports.getAllProductsThatHaveInCart = asyncErrorCatch(
   async (req, res, next) => {
     if (!req.body.user) {
@@ -324,96 +425,80 @@ exports.getAllProductsThatHaveInCart = asyncErrorCatch(
     if (!req.body.store) {
       return next(new ErrorHandler(400, "Please enter store Id"));
     }
-    const fifteenMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
-    // console.log(fifteenMinutesAgo);
-    const products = await cartModel
+    
+    const cart = await cartModel
       .findOne({
         user: req.body.user,
         store: req.body.store,
-        createdAt: { $gt: fifteenMinutesAgo },
       })
       .populate({
         path: "orderItems.product",
         select:
-          "productName price quantity image discountedPrice isAvailableInOffer store category offPercentage dateTillAvailableInOffer isTaxable obj.stock",
+          "productName price quantity image discountedPrice isAvailableInOffer store category offPercentage dateTillAvailableInOffer isTaxable",
         populate: { path: "category", select: "categoryName" },
       });
 
-    // console.log(products);
-    if (products === null) {
-      res
-        .status(200)
-        .json({
-          success: true,
-          status: "expired",
-          message: "All offer products retrieved successfully",
-        });
-    } else {
-      const orderProducts = products.orderItems;
-      // console.log(orderProducts);
-      let prodId = [];
-      const productInfo = orderProducts.map((obj) => {
-        console.log(obj, "obj");
-        const product = obj.product;
-        const stock = obj.quantity;
-
-        return {
-          _id: product._id,
-          addedQuantity: stock,
-          productName: product.productName,
-          price: product.price,
-          quantity: product.quantity,
-          image: product.image,
-          discountedPrice: product.discountedPrice,
-          isAvailableInOffer: product.isAvailableInOffer,
-          store: product.store,
-          category: product.category,
-          offPercentage: product.offPercentage,
-          dateTillAvailableInOffer: product.dateTillAvailableInOffer,
-          isTaxable: product.isTaxable,
-        };
+    if (!cart) {
+      return res.status(200).json({
+        success: true,
+        status: "empty",
+        message: "No cart found for this user and store",
       });
-
-      if (productInfo?.length === 0) {
-        return next(new ErrorHandler(404, "No Product Found"));
-      } else {
-        const offerProducts = await offerModel.find(
-          { store: req.body.store },
-          { offerProducts: 1 }
-        );
-        if (offerProducts.length === 0) {
-          return next(new ErrorHandler(404, "No product found"));
-        } else {
-          const updatedProducts = productInfo.map((product) => {
-            // Find the offerProducts array that contains the current product's _id
-            const offerProduct = offerProducts.find((offerProduct) =>
-              offerProduct.offerProducts.find((offer) => {
-                if (new ObjectId(offer.product).equals(product._id)) {
-                  // If a matching offer product is found, add its stock field to the current product object
-                  product.quantity = offer.stock;
-                  // console.log(product.price, offer.stock, "line");
-                  return true;
-                }
-              })
-            );
-            // console.log(product);
-            // Return the updated product object
-            return product;
-          });
-          res
-            .status(200)
-            .json({
-              success: true,
-              products: updatedProducts,
-              status: products.status,
-              message: "All offer products retrieved successfully",
-              user: products.user,
-              store: products.store,
-              _id: products._id,
-            });
-        }
-      }
     }
+
+    const productInfo = cart.orderItems.map((item) => {
+      const product = item.product;
+      return {
+        _id: product._id,
+        addedQuantity: item.quantity,
+        productName: product.productName,
+        price: product.price,
+        quantity: product.quantity,
+        image: product.image,
+        discountedPrice: product.discountedPrice,
+        isAvailableInOffer: product.isAvailableInOffer,
+        store: product.store,
+        category: product.category,
+        offPercentage: product.offPercentage,
+        dateTillAvailableInOffer: product.dateTillAvailableInOffer,
+        isTaxable: product.isTaxable,
+      };
+    });
+
+    if (productInfo.length === 0) {
+      return res.status(200).json({
+        success: true,
+        status: "empty",
+        message: "Cart is empty",
+      });
+    }
+
+    const offerProducts = await offerModel.find(
+      { store: req.body.store },
+      { offerProducts: 1 }
+    );
+
+    const updatedProducts = productInfo.map((product) => {
+      const offerProduct = offerProducts.find((offer) =>
+        offer.offerProducts.find((offerItem) => {
+          if (new ObjectId(offerItem.product).equals(product._id)) {
+            product.quantity = offerItem.stock;
+            return true;
+          }
+        })
+      );
+      return product;
+    });
+
+    res.status(200).json({
+      success: true,
+      products: updatedProducts,
+      status: cart.status,
+      message: "All cart products retrieved successfully",
+      user: cart.user,
+      store: cart.store,
+      _id: cart._id,
+    });
   }
 );
 
