@@ -172,6 +172,8 @@ exports.employeeLogin = asyncErrorCatch(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler(401, "Invalid Email or Password"));
   }
+  // Commenting out the forgot password email logic
+  /*
   if (employee?.emailForForgotPassword === "") {
     res.status(400).json({
       success: false,
@@ -188,6 +190,7 @@ exports.employeeLogin = asyncErrorCatch(async (req, res, next) => {
       message: "Forgot password email not verified please register it again",
     });
   }
+  */
   const token = await employee.getJWTToken();
   res
     .status(200)
