@@ -465,6 +465,7 @@ cron.schedule("*/1 * * * *", async () => {
 // });
 
 exports.newOrder = asyncErrorCatch(async (req, res, next) => {
+  debugger;
   let count = 0;
 
   // Input validation
@@ -565,7 +566,7 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
         orderType: "Promo Deals",
         orderStatus: "665d924f0c58a92b7e224086",
         store,
-        expirationTime: new Date(Date.now() + 10 * 60 * 1000),
+        expirationTime: new Date(Date.now() + 2 * 60 * 1000),
       });
 
       const orderList = await orderModel
@@ -586,6 +587,15 @@ exports.newOrder = asyncErrorCatch(async (req, res, next) => {
   }
 
   if (!isOnlineOrder) {
+    // Check product quantities before processing the order
+  for (let i = 0; i < orderItems.length; i++) {
+    const orderProduct = await productModel.findOne({
+      _id: orderItems[i].product,
+    });
+    if (!orderProduct || orderProduct.quantity === 0 || orderProduct.quantity < orderItems[i].quantity) {
+      return next(new ErrorHandler(400, `Product ${orderItems[i].productName} is out of stock or has insufficient quantity`));
+    }
+  }
     for (let i = 0; i < orderItems?.length; i++) {
       productOrderQuantity = orderItems[i]?.quantity;
       const orderProduct = await productModel.findOne({
