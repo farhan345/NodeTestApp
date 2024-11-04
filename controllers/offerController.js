@@ -379,148 +379,227 @@ exports.createOfferCategoryType = asyncErrorCatch(async (req, res, next) => {
   }
 });
 
+// exports.updateOfferCategoryType = asyncErrorCatch(async (req, res, next) => {
+//   debugger;
+//   if (!req.body.store) {
+//     return next(new ErrorHandler(400, "Please enter store Id"));
+//   }
+//   if (!req.body.offerCategory) {
+//     return next(new ErrorHandler(400, "Please enter offer category Name"));
+//   }
+//   if (!req.body.discountedPercentage) {
+//     return next(new ErrorHandler(400, "Please enter discounted percentage"));
+//   }
+//   if (!req.body.dateTillPromoAvailable) {
+//     return next(
+//       new ErrorHandler(400, "Please enter date till promo available")
+//     );
+//   }
+//   const dateStr = req.body.dateTillPromoAvailable.toString();
+
+//   // // Split the date string into parts
+//   // const dateParts = dateStr.split("-");
+
+//   // // Create a new Date object using the date parts
+//   // const date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+
+//   // // Format the date string using the toLocaleDateString() method
+//   // const formattedDate = date.toLocaleDateString("en-US", {
+//   //   year: "numeric",
+//   //   month: "2-digit",
+//   //   day: "2-digit",
+//   // });
+//   const [day, month, year] = dateStr.split("-").map(Number);
+
+//   // Create a Date object and convert to ISO string
+//   const date = new Date(Date.UTC(year, month - 1, day));
+//   const isoDate = date.toISOString();
+//   const discount = req.body.discountedPercentage;
+//   const existingOfferCategory = await offerModel.findOne({
+//     store: req.body.store,
+//     offerCategory: req.body.offerCategory,
+//   });
+//   if (!existingOfferCategory) {
+//     return next(new ErrorHandler(400, "offer category not found"));
+//   }
+//   const Data = {
+//     offerCategory: req.body.offerCategory,
+//     discountedPercentage: discount,
+//     dateTillPromoAvailable: isoDate,
+//   };
+//   const newData = await isObjectPropertyEmpty(Data, existingOfferCategory);
+//   offerModel.updateOne(
+//     { store: req.body.store, offerCategory: req.body.offerCategory },
+//     newData,
+//     { runValidators: true },
+//     async (err, result) => {
+//       if (err) {
+//         return next(new ErrorHandler(400, err.message));
+//       } else {
+//         if (existingOfferCategory?.offerProducts?.length !== 0) {
+//           let count = 0;
+//           for (let prodct of existingOfferCategory?.offerProducts) {
+//             const existingProduct = await productModel.findById(
+//               prodct?.product
+//             );
+
+//             const discountedPrice =
+//               existingProduct.price * (1 - discount / 100);
+//             const roundedPrice = Math.round(discountedPrice);
+
+//             existingProduct.isAvailableInOffer =
+//               new Date(formattedDate) > new Date() ? true : false;
+//             existingProduct.dateTillAvailableInOffer = formattedDate;
+//             existingProduct.offPercentage = discount;
+//             existingProduct.discountedPrice = roundedPrice;
+
+//             existingProduct.save({ validateBeforeSave: false }, (err, resu) => {
+//               if (err) {
+//                 return next(new ErrorHandler(400, err.message));
+//               } else {
+//                 count++;
+
+//                 if (count === existingOfferCategory?.offerProducts?.length) {
+//                   res.status(200).json({
+//                     success: true,
+//                     message: "Offer category type updated",
+//                   });
+//                 }
+//               }
+//             });
+//           }
+//         } else {
+//           res
+//             .status(200)
+//             .json({ success: true, message: "Offer category type updated" });
+//         }
+//       }
+//     }
+//   );
+
+//   // const existingOfferCategory = await offerModel.findOne({ store: req.body.store, offerCategory: req.body.offerCategory })
+//   // if (existingOfferCategory) {
+//   //     let count = 0;
+//   //     console.log(existingOfferCategory);
+//   //     existingOfferCategory.discountedPercentage = discount
+//   //     existingOfferCategory.dateTillPromoAvailable = formattedDate
+//   //     existingOfferCategory.save({ validateBeforeSave: false }, async (err, result) => {
+//   //         if (err) {
+//   //             return next(new ErrorHandler(400, err.message))
+//   //         } else {
+//   //             // console.log(existingOfferCategory?.offerProducts);
+//   //             const updateProductId = existingOfferCategory?.offerProducts?.map((obj) => obj.product)
+//   //             console.log(formattedDate);
+//   //             // console.log(updateProductId);
+//   //             for (let prodct of existingOfferCategory?.offerProducts) {
+
+//   //                 const existingProduct = await productModel.findById(prodct?.product);
+
+//   //                 const discountedPrice = existingProduct.price * (1 - discount / 100);
+//   //                 const roundedPrice = Math.round(discountedPrice);
+
+//   //                 existingProduct.isAvailableInOffer = ((new Date(formattedDate)) > (new Date())) ? true : false
+//   //                 existingProduct.dateTillAvailableInOffer = formattedDate
+//   //                 existingProduct.offPercentage = discount
+//   //                 existingProduct.discountedPrice = roundedPrice
+
+//   //                 existingProduct.save({ validateBeforeSave: false }, (err, resu) => {
+//   //                     if (err) {
+//   //                         return next(new ErrorHandler(400, err.message))
+//   //                     }
+//   //                     else {
+//   //                         count++
+
+//   //                         if (count === existingOfferCategory?.offerProducts?.length) {
+//   //                             res.status(200).json({ success: true, message: "Offer category type updated" })
+//   //                         }
+//   //                     }
+//   //                 })
+//   //             }
+
+//   //         }
+
+//   //     })
+//   // }
+// });
 exports.updateOfferCategoryType = asyncErrorCatch(async (req, res, next) => {
-  if (!req.body.store) {
-    return next(new ErrorHandler(400, "Please enter store Id"));
-  }
-  if (!req.body.offerCategory) {
-    return next(new ErrorHandler(400, "Please enter offer category Name"));
-  }
-  if (!req.body.discountedPercentage) {
-    return next(new ErrorHandler(400, "Please enter discounted percentage"));
-  }
-  if (!req.body.dateTillPromoAvailable) {
-    return next(
-      new ErrorHandler(400, "Please enter date till promo available")
+  try {
+    // Check required fields
+    if (!req.body.store) {
+      return next(new ErrorHandler(400, "Please enter store Id"));
+    }
+    if (!req.body.offerCategory) {
+      return next(new ErrorHandler(400, "Please enter offer category Name"));
+    }
+    if (!req.body.discountedPercentage) {
+      return next(new ErrorHandler(400, "Please enter discounted percentage"));
+    }
+    if (!req.body.dateTillPromoAvailable) {
+      return next(new ErrorHandler(400, "Please enter date till promo available"));
+    }
+
+    // Parse and format the date
+    const dateStr = req.body.dateTillPromoAvailable.toString();
+    const [day, month, year] = dateStr.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    const isoDate = date.toISOString();
+
+    // Find existing offer category
+    const existingOfferCategory = await offerModel.findOne({
+      store: req.body.store,
+      offerCategory: req.body.offerCategory,
+    });
+    if (!existingOfferCategory) {
+      return next(new ErrorHandler(400, "Offer category not found"));
+    }
+
+    // Update the offer category details
+    const discount = req.body.discountedPercentage;
+    const Data = {
+      offerCategory: req.body.offerCategory,
+      discountedPercentage: discount,
+      dateTillPromoAvailable: isoDate,
+    };
+    const newData = await isObjectPropertyEmpty(Data, existingOfferCategory);
+    await offerModel.updateOne(
+      { store: req.body.store, offerCategory: req.body.offerCategory },
+      newData,
+      { runValidators: true }
     );
-  }
-  const dateStr = req.body.dateTillPromoAvailable.toString();
 
-  // // Split the date string into parts
-  // const dateParts = dateStr.split("-");
+    // Update associated products if they exist
+    if (existingOfferCategory.offerProducts?.length > 0) {
+      let count = 0;
+      for (let prodct of existingOfferCategory.offerProducts) {
+        const existingProduct = await productModel.findById(prodct.product);
+        if (existingProduct) {
+          const discountedPrice = existingProduct.price * (1 - discount / 100);
+          const roundedPrice = Math.round(discountedPrice);
 
-  // // Create a new Date object using the date parts
-  // const date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+          existingProduct.isAvailableInOffer = new Date(isoDate) > new Date();
+          existingProduct.dateTillAvailableInOffer = isoDate;
+          existingProduct.offPercentage = discount;
+          existingProduct.discountedPrice = roundedPrice;
 
-  // // Format the date string using the toLocaleDateString() method
-  // const formattedDate = date.toLocaleDateString("en-US", {
-  //   year: "numeric",
-  //   month: "2-digit",
-  //   day: "2-digit",
-  // });
-  const [day, month, year] = dateStr.split("-").map(Number);
+          await existingProduct.save({ validateBeforeSave: false });
+          count++;
 
-  // Create a Date object and convert to ISO string
-  const date = new Date(Date.UTC(year, month - 1, day));
-  const isoDate = date.toISOString();
-  const discount = req.body.discountedPercentage;
-  const existingOfferCategory = await offerModel.findOne({
-    store: req.body.store,
-    offerCategory: req.body.offerCategory,
-  });
-  if (!existingOfferCategory) {
-    return next(new ErrorHandler(400, "offer category not found"));
-  }
-  const Data = {
-    offerCategory: req.body.offerCategory,
-    discountedPercentage: discount,
-    dateTillPromoAvailable: isoDate,
-  };
-  const newData = await isObjectPropertyEmpty(Data, existingOfferCategory);
-  offerModel.updateOne(
-    { store: req.body.store, offerCategory: req.body.offerCategory },
-    newData,
-    { runValidators: true },
-    async (err, result) => {
-      if (err) {
-        return next(new ErrorHandler(400, err.message));
-      } else {
-        if (existingOfferCategory?.offerProducts?.length !== 0) {
-          let count = 0;
-          for (let prodct of existingOfferCategory?.offerProducts) {
-            const existingProduct = await productModel.findById(
-              prodct?.product
-            );
-
-            const discountedPrice =
-              existingProduct.price * (1 - discount / 100);
-            const roundedPrice = Math.round(discountedPrice);
-
-            existingProduct.isAvailableInOffer =
-              new Date(formattedDate) > new Date() ? true : false;
-            existingProduct.dateTillAvailableInOffer = formattedDate;
-            existingProduct.offPercentage = discount;
-            existingProduct.discountedPrice = roundedPrice;
-
-            existingProduct.save({ validateBeforeSave: false }, (err, resu) => {
-              if (err) {
-                return next(new ErrorHandler(400, err.message));
-              } else {
-                count++;
-
-                if (count === existingOfferCategory?.offerProducts?.length) {
-                  res.status(200).json({
-                    success: true,
-                    message: "Offer category type updated",
-                  });
-                }
-              }
+          if (count === existingOfferCategory.offerProducts.length) {
+            return res.status(200).json({
+              success: true,
+              message: "Offer category type updated",
             });
           }
-        } else {
-          res
-            .status(200)
-            .json({ success: true, message: "Offer category type updated" });
         }
       }
+    } else {
+      res.status(200).json({ success: true, message: "Offer category type updated" });
     }
-  );
-
-  // const existingOfferCategory = await offerModel.findOne({ store: req.body.store, offerCategory: req.body.offerCategory })
-  // if (existingOfferCategory) {
-  //     let count = 0;
-  //     console.log(existingOfferCategory);
-  //     existingOfferCategory.discountedPercentage = discount
-  //     existingOfferCategory.dateTillPromoAvailable = formattedDate
-  //     existingOfferCategory.save({ validateBeforeSave: false }, async (err, result) => {
-  //         if (err) {
-  //             return next(new ErrorHandler(400, err.message))
-  //         } else {
-  //             // console.log(existingOfferCategory?.offerProducts);
-  //             const updateProductId = existingOfferCategory?.offerProducts?.map((obj) => obj.product)
-  //             console.log(formattedDate);
-  //             // console.log(updateProductId);
-  //             for (let prodct of existingOfferCategory?.offerProducts) {
-
-  //                 const existingProduct = await productModel.findById(prodct?.product);
-
-  //                 const discountedPrice = existingProduct.price * (1 - discount / 100);
-  //                 const roundedPrice = Math.round(discountedPrice);
-
-  //                 existingProduct.isAvailableInOffer = ((new Date(formattedDate)) > (new Date())) ? true : false
-  //                 existingProduct.dateTillAvailableInOffer = formattedDate
-  //                 existingProduct.offPercentage = discount
-  //                 existingProduct.discountedPrice = roundedPrice
-
-  //                 existingProduct.save({ validateBeforeSave: false }, (err, resu) => {
-  //                     if (err) {
-  //                         return next(new ErrorHandler(400, err.message))
-  //                     }
-  //                     else {
-  //                         count++
-
-  //                         if (count === existingOfferCategory?.offerProducts?.length) {
-  //                             res.status(200).json({ success: true, message: "Offer category type updated" })
-  //                         }
-  //                     }
-  //                 })
-  //             }
-
-  //         }
-
-  //     })
-  // }
+  } catch (err) {
+    return next(new ErrorHandler(400, err.message));
+  }
 });
+
 
 exports.removeProductFromOffer = asyncErrorCatch(async (req, res, next) => {
   if (!req.body.store) {
