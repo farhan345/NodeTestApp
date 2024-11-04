@@ -465,7 +465,6 @@ cron.schedule("*/1 * * * *", async () => {
 // });
 
 exports.newOrder = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   let count = 0;
 
   // Input validation

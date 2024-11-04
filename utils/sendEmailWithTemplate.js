@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
 
 const sendEmailWithTemplate = async (options) => {
-  debugger;
   const transporter = nodemailer.createTransport({
     host: "smtp.office365.com",
     port: 587,
