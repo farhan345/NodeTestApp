@@ -1,5 +1,5 @@
 const express=require('express');
-const { addProductInOffer, removeProductFromOffer, getAllOfferProducts, getAllStoresThatHaveOffer, getAllOfferProductsByUser, getAllOfferCategories, getAllProductsOFSpecificOfferCategory, createOfferCategoryType, removeCompleteOffer, updateOfferCategoryType, removeOfferAutomaticallyIfExpire } = require('../controllers/offerController');
+const { addProductInOffer, removeProductFromOffer, getAllOfferProducts, getAllStoresThatHaveOffer, getAllOfferProductsByUser, getAllOfferCategories, getAllProductsOFSpecificOfferCategory, createOfferCategoryType, removeCompleteOffer, updateOfferCategoryType} = require('../controllers/offerController');
 const router=express.Router();
 const {isAuthenticatedStore, isAuthenticatedUser} = require('../middleware/auth');
 
@@ -20,5 +20,5 @@ router.post('/category/products',isAuthenticatedStore,getAllProductsOFSpecificOf
 router.post('/stores/all',isAuthenticatedUser,getAllStoresThatHaveOffer)
 
 
-router.delete('/delete/auto',removeOfferAutomaticallyIfExpire)
+// router.delete('/delete/auto',removeOfferAutomaticallyIfExpire)
 module.exports=router;

@@ -1685,7 +1685,7 @@ exports.getTotalEarningsInOffer = asyncErrorCatch(async (req, res, next) => {
           console.log("comes1");
           offerCompletedOrders += 1;
         }
-        if (order?.orderStatus?.statusType === "In Progress") {
+        if (order?.orderStatus?.statusType === "Pending") {
           offerInProgressOrders += 1;
         }
         if (order?.orderStatus?.statusType === "Ready") {

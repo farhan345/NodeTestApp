@@ -23,7 +23,7 @@ const termsConditionRoutes=require("./routes/termsConditionRoutes")
 const privacyPolicyRoutes=require("./routes/privacyPolicyRoutes")
 const taxRoutes = require("./routes/taxManagementRoutes")
 const serviceRoutes = require("./routes/serviceManagementRoutes")
-
+const {startSchedulers} = require("./controllers/scheduler.js")
 app.use(cors({credentials: true,origin: ['http://localhost:3000','https://www.skipaline.com','https://skipaline.com']}));
 
 app.use("/resources/images/store/document",express.static('resources/images/store/document'))
@@ -73,5 +73,6 @@ app.use('/api/v1/service', serviceRoutes);
 
 // custom error handling middleware
 app.use(errorHandleMiddleware)
+startSchedulers();
 
 module.exports=app;

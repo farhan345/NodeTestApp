@@ -14,6 +14,7 @@ const offerModel = require("../models/offer");
 const productModel = require("../models/product");
 const { ObjectId } = require("mongodb");
 const storeModel = require("../models/store");
+const cartModel = require("../models/cart")
 exports.addProductInOffer = asyncErrorCatch(async (req, res, next) => {
   if (!req.body.offerProducts) {
     return next(new ErrorHandler(400, "Please select products"));
@@ -1436,55 +1437,100 @@ exports.getAllProductsOFSpecificOfferCategory = asyncErrorCatch(
   }
 );
 
-exports.removeOfferAutomaticallyIfExpire = asyncErrorCatch(
-  async (req, res, next) => {
+exports.removeExpiredOffers = async () => {
+  try {
     const currentDate = new Date();
 
-    // offerModel.find({ dateTillPromoAvailable: { $lt: currentDate } },(err, results) => {
-    //     if (err) {
-    //       return next(err)
-    //     }else{
-    //         for(let offer of results){
-    //             cartModel.find
-    //         }
-    //         for (let i = 0; i < carts?.length; i++) {
-    //             offerModel.find({ store: carts[i].store }, (err, offerDocs) => {
-    //                 if (err) {
-    //                     return next(new ErrorHandler(400, err.message));
-    //                 }
+    // Find expired offers
+    const expiredOffers = await offerModel.find({ dateTillPromoAvailable: { $lt: currentDate } });
+    if (!expiredOffers || expiredOffers.length === 0) {
+      console.log("No expired offers found");
+      return;
+    }
 
-    //                 // loop over each offerProducts array in each document
-    //                 offerDocs.forEach((offerDoc) => {
-    //                     offerDoc.offerProducts.forEach((offerProduct) => {
-    //                         // loop over each order item to find the matching product id
-    //                         carts[i].orderItems.forEach((orderItem) => {
-    //                             if (orderItem.product.equals(offerProduct.product)) {
-    //                                 // update the stock value
-    //                                 offerProduct.stock += orderItem.quantity;
-    //                             }
-    //                         });
-    //                     });
+    for (const offer of expiredOffers) {
+      console.log(`Processing expired offer: ${offer._id} for store: ${offer.store}`);
 
-    //                     // save the updated document
-    //                     offerDoc.save(async (err) => {
-    //                         if (err) {
-    //                             return next(new ErrorHandler(400, err.message));
-    //                         } else {
-    //                             const deleteCart = await cartModel.updateMany(
-    //                                 { _id: { $in: deletedItems } },
-    //                                 { $set: { orderItems: [], status: "expired" } },
-    //                                 { new: true });
-    //                             if (deleteCart.acknowledged) {
+      // Always update the offer products
+      if (offer.offerProducts?.length > 0) {
+        for (const product of offer.offerProducts) {
+          console.log(`Reverting product: ${product.product}, Stock to add: ${product.stock}`);
 
-    //                                 res.status(200).json({ success: true, message: "Items removed from cart" })
-    //                             }
-    //                         }
-    //                     });
-    //                 });
-    //             });
-    //         }
-    //     }
-    //     res.status(200).json({success:true,results})
-    // });
+          const updateResult = await productModel.updateOne(
+            { _id: product.product },
+            {
+              $inc: { quantity: product.stock },
+              $set: {
+                isAvailableInOffer: false,
+                discountedPrice: 0,
+                offPercentage: 0,
+                dateTillAvailableInOffer: null,
+              },
+            }
+          );
+
+          console.log(`Update result for product ${product.product}:`, updateResult);
+        }
+      }
+
+      // Check and update carts for this offer's store
+      const carts = await cartModel.find({ store: offer.store });
+      if (carts && carts.length > 0) {
+        for (const cart of carts) {
+          // Revert stock for products in the cart
+          for (const orderItem of cart.orderItems) {
+            console.log(`Processing cart item: ${orderItem.product}`);
+
+            // Find the matching product in the offer
+            const matchingOfferProduct = offer.offerProducts.find((offerProduct) =>
+              orderItem.product.equals(offerProduct.product)
+            );
+
+            if (matchingOfferProduct) {
+              console.log(
+                `Reverting cart item stock for product: ${matchingOfferProduct.product}, Quantity: ${orderItem.quantity}`
+              );
+
+              // Add the product quantity from the cart back to stock
+              await productModel.updateOne(
+                { _id: orderItem.product },
+                { $inc: { quantity: orderItem.quantity } }
+              );
+            }
+          }
+
+          // Clear the cart and mark as expired
+          cart.orderItems = [];
+          cart.status = "expired";
+          await cart.save();
+          console.log(`Cart ${cart._id} marked as expired.`);
+        }
+      }
+
+      // Update store if no more offers are active
+      const allStoreOffers = await offerModel.find({ store: offer.store });
+      if (allStoreOffers.length === 0) {
+        await storeModel.updateOne(
+          { _id: offer.store },
+          { isStoreHasOffer: false, offerPercentage: 0 }
+        );
+        console.log(`Store ${offer.store} updated to remove offer status.`);
+      }
+
+      // Delete the expired offer
+      await offerModel.deleteOne({
+        _id: offer._id,
+      });
+      console.log(`Offer ${offer._id} deleted.`);
+    }
+
+    console.log("Expired offers processed successfully.");
+  } catch (err) {
+    console.error("Error in removeExpiredOffers:", err);
   }
-);
+};
+
+
+
+
+
