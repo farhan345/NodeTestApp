@@ -665,14 +665,14 @@ exports.getAllstores = asyncErrorCatch(async (req, res, next) => {
 
 exports.getAllNearestStores = asyncErrorCatch(async (req, res, next) => {
   if (!req.body.latitude) {
-    return next(new ErrorHandler(400, "please enter user latitude"));
+    return next(new ErrorHandler(400, "Please enter user latitude"));
   }
   if (!req.body.longitude) {
-    return next(new ErrorHandler(400, "please enter user longitude"));
+    return next(new ErrorHandler(400, "Please enter user longitude"));
   }
 
   const { latitude, longitude } = req.body;
-  const maxDistance = 50000; // 50 kilometers
+
   const stores = await storeModel.find({
     location: {
       $near: {
@@ -680,7 +680,6 @@ exports.getAllNearestStores = asyncErrorCatch(async (req, res, next) => {
           type: "Point",
           coordinates: [parseFloat(longitude), parseFloat(latitude)],
         },
-        $maxDistance: maxDistance,
       },
     },
   });
@@ -696,8 +695,8 @@ exports.getAllNearestStores = asyncErrorCatch(async (req, res, next) => {
 
     // Add the distance field to the store object
     return Object.assign(store.toObject(), {
-      distance: (distance / 1609.34).toFixed(2),
-    }); // Convert meters to miles
+      distance: (distance / 1609.34).toFixed(2), // Convert meters to miles
+    });
   });
 
   res.status(200).json({
@@ -705,17 +704,6 @@ exports.getAllNearestStores = asyncErrorCatch(async (req, res, next) => {
     stores: storesWithDistance,
     message: "All stores fetched successfully",
   });
-  //   res.json(stores);
-
-  // const stores = await storeModel.find();
-  // if (stores.length === 0) {
-  //     return next(new ErrorHandler(400, "No store Found"));
-  // }
-  // const { latitude, longitude } = req.body;
-  // const nearestStores = geolib.orderByDistance(
-  //     { latitude, longitude },
-  //     stores
-  // ).filter((store) => geolib.getDistance(store, { latitude, longitude }) <= 50000);
 });
 
 // super admin
