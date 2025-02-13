@@ -65,6 +65,12 @@ const storeSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isPhoneVerified: {
+    type: Boolean,
+    default: false,
+  },
+  phoneVerifyOTP: String,
+  phoneVerifyOTPExpire: Date,
   isDocumentVerified: {
     type: Boolean,
     default: false,
@@ -213,6 +219,7 @@ storeSchema.methods.getResetPasswordOPT = function () {
 };
 //get email verification otp
 storeSchema.methods.getEmailVerificationOPT = function () {
+  debugger;
   const emailverifyOTP = `${Math.floor(100000 + Math.random() * 900000)}`;
   this.emailverifyOTP = crypto
     .createHash("sha256")
@@ -220,6 +227,16 @@ storeSchema.methods.getEmailVerificationOPT = function () {
     .digest("hex");
   this.emailVerifyOTPExpire = new Date(Date.now() + 10 * 60 * 1000);
   return emailverifyOTP;
+};
+
+storeSchema.methods.getPhoneVerificationOTP = function () {
+  const phoneVerifyOTP = `${Math.floor(100000 + Math.random() * 900000)}`;
+  this.phoneVerifyOTP = crypto
+    .createHash("sha256")
+    .update(phoneVerifyOTP)
+    .digest("hex");
+  this.phoneVerifyOTPExpire = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+  return phoneVerifyOTP;
 };
 
 const storeModel = mongoose.model("storeModel", storeSchema);
