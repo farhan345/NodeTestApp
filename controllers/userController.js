@@ -12,75 +12,11 @@ const isObjectPropertyEmpty = require("../utils/checkObjectProperties");
 const { log } = require("console");
 const orderModel = require("../models/order");
 const sendEmailWithTemplate = require("../utils/sendEmailWithTemplate");
-
-// exports.userRegister = asyncErrorCatch(async (req, res, next) => {
-//     debugger;
-//     const msg = "OTP is send on your email, please verify it first";
-
-//     if (!req.body.name) {
-//         return next(new ErrorHandler(400, "Please enter your name"));
-//     }
-//     if (!req.body.password) {
-//         return next(new ErrorHandler(400, "Please enter your password"));
-//     }
-//     if (!req.body.email) {
-//         return next(new ErrorHandler(400, "Please enter your email"));
-//     }
-//     if (!req.body.number) {
-//         return next(new ErrorHandler(400, "Please enter your mobile number"));
-//     }
-//     if (!req.body.address) {
-//         return next(new ErrorHandler(400, "Please enter your address"));
-//     }
-//     if (!req.file?.path) {
-//         return next(new ErrorHandler(400, "Please select your profile picture"));
-//     }
-
-//     const Data = {
-//         name: req.body.name,
-//         password: req.body.password,
-//         email: req.body.email.toLowerCase(),
-//         address: req.body.address,
-//         number: req.body.number,
-//         profile: req.file.path
-//     };
-
-//     console.log(req.body.password);
-
-//     try {
-//         const oldUser = await userModel.findOne({ email: req.body.email });
-//         if (oldUser) {
-//             // Ensure file is not locked before deleting
-//             try {
-//                 //fs.unlinkSync(req.file.thumbnail.path);
-//                 fs.unlinkSync(req.file.path);
-//             } catch (err) {
-//                 console.error(`Error deleting file: ${err.message}`);
-//                 return next(new ErrorHandler(500, "Failed to delete profile picture"));
-//             }
-//             return next(new ErrorHandler(400, "User already registered on this email"));
-//         }
-
-//         // Create new user
-//         const result = await userModel.create(Data);
-//         const token = "";
-//         let profile = formatFilePath(result?.profile);
-//         result.profile = profile;
-//         return sendOTPForEmailVerification(result, res, msg, token, false);
-//     } catch (err) {
-//         // Ensure file is not locked before deleting
-//         try {
-//             fs.unlinkSync(req.file.path);
-//         } catch (err) {
-//             console.error(`Error deleting file: ${err.message}`);
-//             return next(new ErrorHandler(500, "Failed to delete profile picture"));
-//         }
-//         return next(new ErrorHandler(400, err.message));
-//     }
-// });
+const sendSMS = require("../utils/sendSms");
 
 exports.userRegister = async (req, res, next) => {
-  const msg = "OTP is sent to your email, please verify it first";
+  debugger;
+  const msg = "Verification codes have been sent to your email and phone";
 
   if (!req.body.name) {
     return next(new ErrorHandler(400, "Please enter your name"));
@@ -124,12 +60,55 @@ exports.userRegister = async (req, res, next) => {
     const token = "";
     let profile = formatFilePath(result?.profile);
     result.profile = profile;
-    return sendOTPForEmailVerification(result, res, msg, token, false);
+
+    // Send both email and phone verification codes
+    try {
+      // Send email verification
+      const emailVerifyOTP = result.getEmailVerificationOPT();
+      const emailMessage = `Your email verification OTP is: ${emailVerifyOTP}`;
+      const htmlTemplate = fs.readFileSync(
+        "./template/02-email-verification.html",
+        "utf8"
+      );
+      const compiledTemplate = handlebars.compile(htmlTemplate);
+      const htmlModified = compiledTemplate({
+        verificationCode: emailVerifyOTP,
+      });
+
+      await sendEmailWithTemplate({
+        email: result.email,
+        subject: "E-Store - Email Verification",
+        message: emailMessage,
+        htmlModified,
+      });
+
+      // Send phone verification
+      const phoneVerifyOTP = result.getPhoneVerificationOTP();
+      const smsMessage = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
+      await sendSMS(result.number, smsMessage);
+
+      await result.save({ validateBeforeSave: false });
+
+      return res.status(200).json({
+        success: true,
+        token,
+        message: msg,
+        user: result,
+      });
+    } catch (error) {
+      result.emailverifyOTP = undefined;
+      result.emailVerifyOTPExpire = undefined;
+      result.phoneVerifyOTP = undefined;
+      result.phoneVerifyOTPExpire = undefined;
+      await result.save({ validateBeforeSave: false });
+      return next(new ErrorHandler(500, "Error sending verification codes"));
+    }
   } catch (err) {
     await cleanupFiles(req.file);
     return next(new ErrorHandler(400, err.message));
   }
 };
+
 async function cleanupFiles(file) {
   try {
     if (file?.path) {
@@ -201,39 +180,91 @@ exports.registerUserDocument = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.userLogin = asyncErrorCatch(async (req, res, next) => {
-  // debugger;
-  const msg =
-    "OTP is send on your email, please verify your email before login";
+  debugger;
+  const msg = "Please verify both your email and phone number to continue";
+
   if (!req.body.password) {
     return next(new ErrorHandler(400, "Please enter your password"));
   }
   if (!req.body.email) {
     return next(new ErrorHandler(400, "Please enter your email"));
   }
+
   const { password } = req.body;
   const email = req.body.email.toLowerCase();
-  console.log(email, password);
+
   if (!email || !password) {
-    return next(new ErrorHandler(400, "please enter email and password"));
+    return next(new ErrorHandler(400, "Please enter email and password"));
   }
+
   const user = await userModel.findOne({ email: email }).select("+password");
   if (!user) {
     return next(new ErrorHandler(401, "Invalid Email or Password"));
   }
-  console.log(user);
+
   const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
     return next(new ErrorHandler(401, "Invalid Email or Password"));
   }
+
   if (user.isUserBlock === true) {
     return next(
-      new ErrorHandler(400, "sorry, your account has been blocked by admin")
+      new ErrorHandler(400, "Sorry, your account has been blocked by admin")
     );
   }
+
   const token = "";
-  if (!user.isEmailVerified) {
-    return sendOTPForEmailVerification(user, res, msg, token, true);
+
+  // Check both email and phone verification
+  if (!user.isEmailVerified || !user.isPhoneVerified) {
+    // Send verification codes for unverified channels
+    try {
+      if (!user.isEmailVerified) {
+        const emailVerifyOTP = user.getEmailVerificationOPT();
+        const emailMessage = `Your email verification OTP is: ${emailVerifyOTP}`;
+        const htmlTemplate = fs.readFileSync(
+          "./template/02-email-verification.html",
+          "utf8"
+        );
+        const compiledTemplate = handlebars.compile(htmlTemplate);
+        const htmlModified = compiledTemplate({
+          verificationCode: emailVerifyOTP,
+        });
+
+        await sendEmailWithTemplate({
+          email: user.email,
+          subject: "E-Store - Email Verification",
+          message: emailMessage,
+          htmlModified,
+        });
+      }
+
+      if (!user.isPhoneVerified) {
+        const phoneVerifyOTP = user.getPhoneVerificationOTP();
+        const smsMessage = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
+        await sendSMS(user.number, smsMessage);
+      }
+
+      await user.save({ validateBeforeSave: false });
+
+      return res.status(200).json({
+        success: false,
+        token,
+        message: msg,
+        user,
+        needsEmailVerification: !user.isEmailVerified,
+        needsPhoneVerification: !user.isPhoneVerified,
+      });
+    } catch (error) {
+      user.emailverifyOTP = undefined;
+      user.emailVerifyOTPExpire = undefined;
+      user.phoneVerifyOTP = undefined;
+      user.phoneVerifyOTPExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      return next(new ErrorHandler(500, "Error sending verification codes"));
+    }
   }
+
   const user2 = await userModel.findOne({ email: email });
   sendToken(res, 200, user2, "Login Successfully");
 });
@@ -383,12 +414,14 @@ exports.resendOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.verifyEmailVerificationOTP = asyncErrorCatch(async (req, res, next) => {
+  debugger;
   if (!req.body._id) {
     return next(new ErrorHandler(400, "Please enter user Id"));
   }
   if (!req.body.OTP) {
     return next(new ErrorHandler(400, "Please enter email verification OTP"));
   }
+
   const isUser = await userModel.findById(req.body._id);
   if (!isUser) {
     return next(new ErrorHandler(400, "User not Found"));
@@ -396,24 +429,51 @@ exports.verifyEmailVerificationOTP = asyncErrorCatch(async (req, res, next) => {
   if (isUser.isEmailVerified) {
     return next(new ErrorHandler(400, "Your email is already verified"));
   }
+
   const emailverifyOTP = crypto
     .createHash("sha256")
     .update(req.body.OTP)
     .digest("hex");
+
   const user = await userModel.findOne({
     emailverifyOTP,
     _id: req.body._id,
     emailVerifyOTPExpire: { $gt: Date.now() },
   });
+
   if (!user) {
     return next(new ErrorHandler(400, "Your OTP was expired"));
   }
+
   user.isEmailVerified = true;
   await user.save({ validateBeforeSave: false });
 
-  res
-    .status(200)
-    .json({ success: true, message: "Email verified", user: user });
+  // Generate Phone Verification OTP
+  const phoneVerifyOTP = user.getPhoneVerificationOTP();
+  await user.save({ validateBeforeSave: false });
+
+  const smsMessage = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
+
+  try {
+    await sendSMS(user.number, smsMessage);
+
+    res.status(200).json({
+      success: true,
+      message: "Email verified. Please verify your phone number.",
+      requiresPhoneVerification: true,
+      user: {
+        _id: user._id,
+        number: user.number,
+      },
+    });
+  } catch (error) {
+    user.phoneVerifyOTP = undefined;
+    user.phoneVerifyOTPExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new ErrorHandler(500, "Error sending SMS. Please try again later.")
+    );
+  }
 });
 
 exports.verifyResetPasswordOTP = asyncErrorCatch(async (req, res, next) => {
@@ -1011,3 +1071,139 @@ exports.getTotalNumberOfUsersByMonth = asyncErrorCatch(
   }
 );
 // total monthly blocked and verified users ends
+
+exports.sendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
+  debugger;
+  if (!req.body.number) {
+    return next(new ErrorHandler(400, "Please provide your phone number"));
+  }
+
+  const user = await userModel.findById(req.body._id);
+  if (!user) {
+    return next(new ErrorHandler(404, "user not found"));
+  }
+
+  const phoneVerifyOTP = user.getPhoneVerificationOTP();
+  await user.save({ validateBeforeSave: false });
+
+  const message = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
+
+  try {
+    await sendSMS(req.body.number, message);
+
+    res.status(200).json({
+      success: true,
+      message: "Verification code sent to your phone number",
+      user: {
+        _id: user._id,
+        number: user.number,
+      },
+    });
+  } catch (error) {
+    user.phoneVerifyOTP = undefined;
+    user.phoneVerifyOTPExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new ErrorHandler(500, "Error sending SMS. Please try again later.")
+    );
+  }
+});
+
+exports.verifyPhoneOTP = asyncErrorCatch(async (req, res, next) => {
+  debugger;
+  if (!req.body.OTP) {
+    return next(new ErrorHandler(400, "Please enter phone verification OTP"));
+  }
+  if (!req.body._id) {
+    return next(new ErrorHandler(400, "Please enter user Id"));
+  }
+
+  const phoneVerifyOTP = crypto
+    .createHash("sha256")
+    .update(req.body.OTP)
+    .digest("hex");
+
+  const user = await userModel.findOne({
+    phoneVerifyOTP,
+    _id: req.body._id,
+    phoneVerifyOTPExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new ErrorHandler(400, "Invalid OTP or OTP has expired"));
+  }
+
+  user.isPhoneVerified = true;
+  user.phoneVerifyOTP = undefined;
+  user.phoneVerifyOTPExpire = undefined;
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    message: "Phone number verified successfully",
+    user,
+  });
+});
+
+exports.resendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
+  if (!req.body.number) {
+    return next(new ErrorHandler(400, "Please provide your phone number"));
+  }
+  if (!req.body._id) {
+    return next(new ErrorHandler(400, "Please provide user ID"));
+  }
+
+  const user = await userModel.findOne({
+    _id: req.body._id,
+    number: req.body.number,
+  });
+
+  if (!user) {
+    return next(new ErrorHandler(404, "User not found with this phone number"));
+  }
+
+  if (user.isPhoneVerified) {
+    return next(new ErrorHandler(400, "Phone number is already verified"));
+  }
+
+  const phoneVerifyOTP = user.getPhoneVerificationOTP();
+  await user.save({ validateBeforeSave: false });
+
+  const message = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
+
+  try {
+    await sendSMS(user.number, message);
+
+    res.status(200).json({
+      success: true,
+      message: "New verification code sent to your phone number",
+    });
+  } catch (error) {
+    user.phoneVerifyOTP = undefined;
+    user.phoneVerifyOTPExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new ErrorHandler(500, "Error sending SMS. Please try again later.")
+    );
+  }
+});
+
+exports.verifyUserStatus = asyncErrorCatch(async (req, res, next) => {
+  const user = await userModel.findById(req.user.id);
+
+  if (!user.isEmailVerified || !user.isPhoneVerified) {
+    return next(
+      new ErrorHandler(403, "Please verify both your email and phone number")
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "User verified",
+    isEmailVerified: user.isEmailVerified,
+    isPhoneVerified: user.isPhoneVerified,
+  });
+});

@@ -440,14 +440,14 @@ exports.verifyStoreEmailVerificationOTP = asyncErrorCatch(
     try {
       await sendSMS(store.number, smsMessage);
 
-      const url = `http://localhost:5001/api/v1/payment/connect-stripe-account/${store._id}`;
-      const emailMessage = `You have one last step left! Please click on the link to connect your stripe account ${url}`;
-      await sendEmailTostore({
-        email: store.email,
-        subject: "E-Store",
-        message: emailMessage,
-        html: userWelcomeEmailTemplate({ url }),
-      });
+      // const url = `http://localhost:5001/api/v1/payment/connect-stripe-account/${store._id}`;
+      // const emailMessage = `You have one last step left! Please click on the link to connect your stripe account ${url}`;
+      // await sendEmailTostore({
+      //   email: store.email,
+      //   subject: "E-Store",
+      //   message: emailMessage,
+      //   html: userWelcomeEmailTemplate({ url }),
+      // });
 
       res.status(200).json({
         success: true,
