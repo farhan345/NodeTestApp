@@ -153,6 +153,7 @@ userSchema.methods.getResetPasswordOPT = function () {
 };
 //get email verification otp
 userSchema.methods.getEmailVerificationOPT = function () {
+  debugger;
   const emailverifyOTP = `${Math.floor(100000 + Math.random() * 900000)}`;
   this.emailverifyOTP = crypto
     .createHash("sha256")

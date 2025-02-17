@@ -1392,6 +1392,7 @@ exports.verifyPhoneOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.resendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
+  debugger;
   if (!req.body.number) {
     return next(new ErrorHandler(400, "Please provide your phone number"));
   }
