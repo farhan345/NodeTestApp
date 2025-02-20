@@ -401,7 +401,6 @@ exports.resendEmailVerificationOTP = asyncErrorCatch(async (req, res, next) => {
 // );
 exports.verifyStoreEmailVerificationOTP = asyncErrorCatch(
   async (req, res, next) => {
-    debugger;
     if (!req.body.OTP) {
       return next(new ErrorHandler(400, "Please enter email verification OTP"));
     }
@@ -1317,7 +1316,6 @@ exports.getStoreFees = async (req, res) => {
   }
 };
 exports.sendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body.number) {
     return next(new ErrorHandler(400, "Please provide your phone number"));
   }
@@ -1355,7 +1353,6 @@ exports.sendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.verifyPhoneOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body.OTP) {
     return next(new ErrorHandler(400, "Please enter phone verification OTP"));
   }
@@ -1392,7 +1389,6 @@ exports.verifyPhoneOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.resendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body.number) {
     return next(new ErrorHandler(400, "Please provide your phone number"));
   }

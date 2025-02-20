@@ -15,7 +15,6 @@ const sendEmailWithTemplate = require("../utils/sendEmailWithTemplate");
 const sendSMS = require("../utils/sendSms");
 
 exports.userRegister = async (req, res, next) => {
-  debugger;
   const msg = "Verification codes have been sent to your email and phone";
 
   if (!req.body.name) {
@@ -85,7 +84,7 @@ exports.userRegister = async (req, res, next) => {
       // Send phone verification
       const phoneVerifyOTP = result.getPhoneVerificationOTP();
       const smsMessage = `Your Skip A Line phone verification code is: ${phoneVerifyOTP}. Valid for 10 minutes.`;
-      await sendSMS(result.number, smsMessage);
+      // await sendSMS(result.number, smsMessage);
 
       await result.save({ validateBeforeSave: false });
 
@@ -180,7 +179,6 @@ exports.registerUserDocument = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.userLogin = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   const msg = "Please verify both your email and phone number to continue";
 
   if (!req.body.password) {
@@ -414,7 +412,6 @@ exports.resendOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.verifyEmailVerificationOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body._id) {
     return next(new ErrorHandler(400, "Please enter user Id"));
   }
@@ -1073,7 +1070,6 @@ exports.getTotalNumberOfUsersByMonth = asyncErrorCatch(
 // total monthly blocked and verified users ends
 
 exports.sendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body.number) {
     return next(new ErrorHandler(400, "Please provide your phone number"));
   }
@@ -1111,7 +1107,6 @@ exports.sendPhoneVerificationOTP = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.verifyPhoneOTP = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   if (!req.body.OTP) {
     return next(new ErrorHandler(400, "Please enter phone verification OTP"));
   }

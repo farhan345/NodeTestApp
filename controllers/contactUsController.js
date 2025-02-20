@@ -13,7 +13,6 @@ exports.getContactUs = asyncErrorCatch(async (req, res, next) => {
 });
 
 exports.updateContactUs = asyncErrorCatch(async (req, res, next) => {
-  debugger;
   try {
     const { email, phone, address, socialLinks } = req.body;
     let contact = await ContactUs.findOne();
